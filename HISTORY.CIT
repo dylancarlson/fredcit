@@ -1,0 +1,1562 @@
+@SLICK MA=9 75 9 , TABS=1 9 17 25 33 41 49 57 65 73 81 89 97 105 113 121 129 137 145 153 161 169 177 185 193 201 209 217 225 233 , WWS=3, IWT=0, ST=0, ma 9 75 9
+$Header:   D:/VCS/FCIT/HISTORY.CIV   1.6   21 Sep 1991 10:18:20   FJM  $
+[*     History of changes made on September 1989 source code of DragCit.     *]
+
+03/02/90 - Fred McLain added Com Drivers in IBMCOM.C and IBMCOM.H. He also made
+           changes in PORT.C for this. This makes it so Citadel no longer has
+           to use CSERL.ASM for its COM drivers. It was very buggy.
+
+03/03/90 - Zen master added changes to TIMEDATE.C to allow for Roman Numerals
+           for the year in the message headers. Also, changes in MSG3.C,
+           ROOMB.C, and CTDL.H to allow for anonymous rooms in the code.
+           NET.C was fixed to fix the reversed group problem.
+           Zen master and Grendel enabled DRAGON.C. CRC checking in MISC2.C
+           commented out by Grendel so opening screen in VERSION.C could be
+           a picture of the family tree.
+
+03/05/90 - Fred
+        Integrated Zen's changes and mine, except for Dragon.c
+        Improved Chat sound
+        Various notes on near term fixes.
+
+03/07/90 - Zen master added soft-coded software name to VERSION.C, MISC.C
+           and MISC2.C, fixed Bunny Filter (fake full-case) to be activated
+           if at least 90% of the message text is upper case (in EDIT.C and
+           MSG3.C), and changed the default for the "No record" prompt
+           (after a misspelled password or new user) to "No" instead of
+           "Yes", (in LOG2.C) and fixed some bugs in LOG3.C...
+
+03/09/90 - {zm} released complete source to all of the above.  Made the
+           improved chat an #ifdef so that other options can be added later.
+           put the globally defined software name everywhere else it occurs:
+           APLIC.C, CTDL.C, and INFOFILE.C.
+
+03/10/90 - {zm} fixed NET.C a whole lot: allow [viewable moderated] and
+           [viewable problem user] messages from other nodes to work right.
+           try to get outgoing twit msgs to net properly.  Count netmail
+           in "messages entered" in trapfile.
+
+03/11/90 - {zm} added #DEFAULT_GROUP "groupname" to external.cit, it's for
+           incoming group-only net messages.  CONFIG.C, NET.C, GLOBAL.H
+
+03/11/90 - Fred
+        Use of memset() in netting, misc cleanup.
+        Made COM 1-4 work etc.
+        Fixed use of F7 with fancy bells.
+        Added trapping of room requests if debug is on.
+
+03/13/90 - Fred
+        Translation of IBM Character graphics to ANSI.  Even takes less space!
+        (I think).
+
+03/14/90 - Fred
+        New input translation filter.  Fixed word wrap bug.
+        Added 43/50 line modes for console.  Note: Must have TC 2.01 patched
+        to work in 43/50 line mode (crt43.obj).
+
+03/15/90 - {zm} integrated the above changes.  added [title] name [surname],
+        allowed all names to be 30 characters for full DragCit compatibility.
+
+03/16/90 - Fred
+        Corrected edit/iChar problems.  Graphics entry works now.
+        Reversed order of Title/Surname in user log
+
+03/17/90 - Fred
+        Added checks to calls to farfree() everywhere.
+        Integrated Zen's changes uploaded today - no history.cit Zen?
+
+03/17/90 - {zm} *sigh* I'm just too busy, you know.. added net path and
+        the other fields (origin and destination country names) which
+        have recently been added to DragCit netting.
+
+03/18/90 - Fred
+        Fixed input translation filter.  Removed unused globals. First lint.
+
+03/20/90 - {zm} changed output translation for DEL character.
+
+03/27/80 - Fred
+        Integrated Zen's change.  I've pulled out the split screen chat for
+        now.  Too buggy.  Will put back something like that latter.
+        Pulled trap out for INT 22 (DOS always changes it).
+        Bumped release number, now Release 0.00.05.
+
+03/29/90 - Fred
+        MUCH faster strpos() function.
+
+04/01/90 - Fred
+        Changed password change prompt.
+        Added checks for reconfig on newly installed version.
+
+04/04/90 - {zm} added reversed +/- to show direction
+
+04/14/90 - Fred
+        Integrated Zen's change (I typed the above rev. line, not Zen).
+	Changed several modules to use label and FILESIZE.
+	apldata struct and fInfo struct need to be changed for larger names.
+
+05/10/90 - Fred Release 0.00.07
+        Fixed FILEINFO.CIT for longer names.  New convert program called, FINFO
+        It deletes FILEINFO.OLD, renames FILEINFO.CIT to FILEINFO.OLD, and then
+        converts the FILEINFO.OLD to the new FILEINFO.CIT.
+
+          ษอออออออออออออออออออออออออออออออออออออออออออออออป
+          บYou MUST run FINFO in all your directory rooms!บ
+          ศอออออออออออออออออออออออออออออออออออออออออออออออผ
+
+05/16/90 - Fred Release 0.00.08
+        New room prompts for ANSI users, better Next hall/room messages.
+
+
+05/17/90 - Fred
+        Removed "Can't find message..." message from modem output.
+
+                You can now add your own commands, or change the ones
+                already there!
+
+        Added external commands.  To use, attach a line to external.cit for
+        each command you want to add to the system.  The commands can be used
+        to replace the normal command letters, such as Read or Enter, so be
+        careful.  Commands can be console only, or both console and modem.
+        The command line itself has the same options as the upload/download
+        entry in EXTERNAL.CIT.  Here's what I added to make Qedit (qe in my
+        path) work whenever I pressed "Q" from the command line.
+
+                #EXTERNAL   "Qedit"        1       "q"
+
+        to run FLIB from the 1 key:
+
+                #EXTERNAL   "1 Library"      0       "@flib"
+
+        The format for external commands is:
+
+                #EXTERNAL   <name>  <console only flag> <command line>
+
+        Notice that this is pretty much the same as the editor commands.
+
+05/18/90 - Fred Release 0.00.09
+        Added CHAT.BLB for successful chat requests.  Create a CHAT.BLB
+        in your help file directory!
+        Made '=' do the same thing at a room prompt as '+'
+
+05/19/90 - Fred
+        Fixed accounting to negotiate upload & download charges, and eliminate
+        an unused variable.
+        Improved external commands.  Now always start in APPLIC directory,
+        and always return to home directory.  Should be better.
+
+05/20/90 - Fred
+        Made it so you can have multiple CHAT.BLB (CHAT.BLB, CHAT1.BLB,
+        CHAT2.BLB ... CHATn.BLB).
+        Made it so you can have multiple NOCHAT.BLB (NOCHAT.BLB, NOCHAT1.BLB,
+        NOCHAT2.BLB ... NOCHATn.BLB).
+        New NOSOP.BLB (can have multiple...) for when the chat bell isn't
+        answered.
+
+        Create the new files for your system:
+
+                CHAT.BLB, CHAT1.BLB, CHAT2.BLB ... CHATn.BLB
+                NOCHAT.BLB, NOCHAT1.BLB, NOCHAT2.BLB ... NOCHATn.BLB
+                NOSOP.BLB, NOSOP1.BLB, NOSOP2.BLB ... NOSOPn.BLB
+
+06/06/90 - Fred Release 0.00.10
+        Added VROOM overlays.
+        Added protection to net code, prevent crashes if net changes.
+        Fixed group message problem.
+
+06/09/90 - Fred Release 0.00.11
+        Now saves CRON table to disk on normal shut down.
+        Bug fix to group-only messages in mayseeindexmsg()
+        Small fixes to FINFO.EXE
+
+06/15/90 - Fred Release 0.00.12
+        Fixed bug that prevented 10 & 11 from answering incoming calls.
+
+06/15/90 - Fred
+        Added character pacing (-p num) option for ST emulator.
+        Added EMS (-e) and Extended memory (-x) overlay options.
+        Added messages for bad options.
+        FCIT -?  will display options now.
+
+06/16/90 - Fred
+        Changed "ETC.DAT not found" message.
+        Added -s option for running as a shell from another BBS.  Be sure
+        to change the init strings for the modem if you use this!
+
+        Valid switches:
+            -c        Read configuration files.
+            -d        DesqView/TopView/Windows regular mode.
+            -e        Use EMS memory for overlays.
+            -p num    Set output pacing to num.
+            -s        Run as a shell from another BBS.
+            -x        Use extended memory for overlays.
+
+        Can also run FredCit from Windows 3.0 enhanced mode with the supplied
+        PIF file.  Use the -d to run in a window for regular mode.
+ 	Fixes to allow entry of 30 char nym & initials.
+	Made IBM Graphics characters a separate option.  Use ! to turn it
+        on & off at command line.  Also in user config menu now.
+
+07/07/90 - Fred
+        Added COM3 COM4 to bad device names, and CLOCK$ to bad file name list.
+
+07/16/90 - Fred Release 14
+        Larger supershells.  Thanks Ray!
+
+07/22/90 - Fred Release 0.00.15
+        Added "Ads".  Show an ad 10% of the time after a command.  Uses blurb
+        files AD.BLB AD1.BLB AD2.BLB ... ADn.BLB, or AD.BL@ AD1.BL@ AD2.BL@
+        for ANSI ads.  Sort of like boarderlines, but better (and less memory).
+	Fixed link order of overlay libs.  This should fix some mysterious
+	errors?
+
+        Added -b <baud> option.  This was needed when running FredCit as a
+        shell.
+
+        Warning:  Do not use the -x (extended memory) option on 286 computers.
+        According to Borland (who make the C compiler I use), it can *and
+        will* cause dropped characters and possibly system lockups. Use the
+        -e (EMS) option instead.
+
+07/23/90 - Fred
+        Prevent entry of 0xff in iChar
+        Added option to just run cron events (-v).
+
+        Valid DOS command line switches:
+
+                -b baud   Starting baud rate (300-19200)
+                -c        Read configuration files
+                -d        DesqView/TopView
+                -e        Use EMS memory for overlays
+                -p num    Set output pacing to num
+                -s        Run as a shell from another BBS
+                -v        Just run cron events
+                -x        Use extended memory for overlays (386/486 only!)
+
+        Fixed bug where the system would wait for a character before
+        returning to the BBS in shell mode.
+
+07/26/90 - Fred Release 16!
+        Changed compiler optimization (-Z-).
+        Played with overlay speed.
+        Fixed up shell mode exit.
+        Made goto/bypass start at current room.
+
+07/26/90 - Fred
+        Changed compiler options again, use -Y on all modules.
+        Added time/date to logout message.
+        Added #ADCHANCE and #ADTIME settings for EXTERNAL.CIT
+
+        #ADCHANCE is the chance of an ad appearing at the command
+        (room) prompt.  Use whole numbers in the range of 0-100.  0
+        disables random ads.
+
+        #ADTIME is the number of seconds of idle time before an ad is
+        shown.  Use whole numbers in the range of 0-100.  0
+        disables timeout ads.
+
+        I recommend either a very low ad percentage (1-5%) or a large number
+        of ad files (like AD.BLB-AD20.BLB), to prevent user annoyance.
+        Along the same vein, try not to have too many long ads. For
+        example, you could have these lines in your external.cit:
+
+                #ADCHANCE 5
+                #ADTIME   40
+
+        Making the user see an ad 5% of the time after a command, and
+        automatically if they sit idle for 40 seconds.
+
+        Remember: ANSI drawings can be placed in any .BL@ files.  I find
+        that TheDraw works well for creating these.  You can include IBM
+        Graphics characters (line drawings and such) in any .BLB file.
+        Color control codes, motion controls, etc. can be used in the .BL@
+        files.
+
+07/30/90 - Fred - Release 17
+        Fixed a nasty bug in initialization.  Probably was crashing systems.
+        Also added (yesterday) code to show what time a user logged out.
+
+08/05/90 - Fred
+        Created floppy version of FredCit, FFCIT.EXE
+        Fixed GetStr() function. Should stop some board crashers.
+
+08/07/90 - (again) Fred Release 18.
+        Made "Sleeping? Call again :-)" hang up logged in users in door
+        mode.
+        Fixed bug in #ADCHANCE and #ADTIME.
+        Improved the way blurbs are cycled.  Now ANSI blurbs (.BL@) can be
+        mixed with plain ones (.BLB).  For example, you could have several
+        ad blurbs, with plain and ansi mixed together:
+                AD.BLB
+                AD.BL@
+                AD1.BLB
+                AD2.BLB
+                AD3.BLB
+                AD3.BL@
+                AD4.BLB
+        Make sure you have all the numbers filled in for the .BLB files
+        though, since a whole in the cycle will prevent users from seeing
+        the rest of the blurbs. (did that make sense?)
+
+08/07/90 - Fred Version 19 (already?)
+        Made ALL the blurbs rotate...
+
+        Go to your help directory, and do a DIR *.BL?
+        Change all the files with names of 8 characters (line BULLETIN.BLB)
+        to names of 6 (like BULLET.BLB).  You can also have numbered ones
+        (like BULLET1.BLB, BULLET1.BL@, etc).
+
+        Enjoy!
+
+08/07/90 - Fred Version 19a
+        Backed out the "Sleeping..." change, since it wasn't working right
+        (was causing the line to be hung up when exiting shell mode).
+
+08/08/90 - Fred
+        Made "Sleeping, call again :-)" blurb rotate, create your
+        SLEEPn.BLB and SLEEP.BL@ blurbs!
+        Added SLEEPY.BLB that rotates, supports ANSI, and shows up 30
+        seconds before the autologoff happens.
+
+08/10/90 - Fred
+        Changed to use TurboC delay() function.
+        -p parameter is now in milliseconds
+        Changed the way a log of internal code for networking works.  You
+        MUST edit your nodes.cit!  Change the lines that look like:
+
+                #MESSAGE_TMP    "MAIL\\node.mai"
+        to
+                #MESSAGE_TMP    "node.mai"
+        And move the mail files to your home path.  Will be adding a
+        mail path later.
+
+08/18/90 - Fred Release 21
+        Lots of changes!
+        Default group mapping done by the system now makes aide messages.
+        Huge super shells!  (saved 114k on my system :)
+        More memory for larger message bases.
+        New debug mode for incoming net calls.
+
+08/18/90 - Fred
+
+                        **** EXIT EVENTS ****
+
+        Added exit events.  Here's the event I have in my test system, at
+        the end of everything else in the CRON.CIT file.
+
+                        Exit to MS-DOS returning an errorcode 0.
+
+                #DO             EXIT    0
+                #HOURS          ANY
+                #DAYS           ANY
+                #RETRY_TIME     0
+                #REDO_TIME      0
+
+        This makes the system exit to DOS after all the events are
+        processed.  It's useful for me when I forget to take the machine
+        off line (my voice line!).  The number is the errorlevel returned
+        to DOS, you can use this in your batch files (for example, running
+        an Opus or FidoNet Link as a midnight cron event).
+
+        You can also use this for boards with limited hours.  For
+        example, a board that needs to shut itself off at 9 AM on
+        weekdays would have an event:
+
+                #DO             EXIT    0
+                #HOURS          9
+                #DAYS           Mon Tue Wed Thu Fri
+                #RETRY_TIME     0
+                #REDO_TIME      0
+
+        Don't forget to enter your cron file after you change it (".sce").
+
+                        **** RBBS DOOR SUPPORT! ****
+
+        Added direct support for RBBS doors.  When a program is run by
+        FredCit now, there's an RBBS style door information file produced.
+        This file is called DORINFO0.DEF if in local mode, DORINFO1.DEF for
+        port 1, DORINFO2.DEF for port 2, etc.  This makes it much easier to
+        run RBBS style doors.  For example, to run The Pit, you use it's
+        setup program to install it as an RBBS door, and then place this
+        batch file in your applic directory:
+
+                @ECHO OFF
+                CD \PIT116
+                IF %1==LOCAL PIT C:\CIT\APLIC\DORINFO0.DEF
+                IF %1==1 PIT C:\CIT\APLIC\DORINFO1.DEF
+                IF %1==2 PIT C:\CIT\APLIC\DORINFO2.DEF
+
+        FredCit will handle the rest!  For now, the sysop name, city, and
+        state normally passed to an RBBS application are dummy values (Mr
+        Sysop, Anytown, USA).
+
+                                !!!Warning!!!
+        Exit events are not compatible with the -v command line option.
+        Don't mix them together, you won't like it!
+
+08/20/90 - Fred Release 22
+        Cause Zog wanted it.
+
+08/24/90 - Fred
+        Changed blurbs so the first one can be an 8 character file name.
+
+08/26/90 - Fred
+        Increased some forgotten netted fields to 30 characters, some
+        modification of the display for netted rooms.
+
+08/28/90 - Fred
+        Modified gotoRoom() again.
+
+08/30/90 - Fred
+
+                        !!!!!!!!  NOTICE THIS  !!!!!!!!
+
+                 You MUST run FGRP.EXE before this new version!
+
+        I've expanded GRP.DAT to 64 groups!  Old FredCits MUST run
+        FGRP.EXE to expand the old GRP.DAT before running the new version.
+        Old FredCits will not run until you do this!
+
+        Thanks for the idea Centauri!
+
+        Also made group descriptions show up in .Aide List Groups.
+
+09/02/90 - Fred Release 23
+
+        Added descriptive text to the conversion programs FGRP.EXE and
+        FINFO.EXE.
+        Somewhere between version 21 and 23 I made quite a few changes to
+        netting.  This shouldn't affect the way the net works, but does
+        make Cit use less memory.  Let me know if you have problems.  One
+        of the changes you might notice is that room names on console are
+        now displayed correctly when longer then 22 characters.
+        Also fixed a bug in netting that may have hung systems (ooops!).
+
+09/06/90 - Fred
+        Added room description to roomdescription().
+        Changed logout time message
+
+09/14/90 - Fred
+        Made FCit add the group creator to the new group.
+
+        Fixed a bug in netting that could crash the system when net errors
+        occurred (was closing the already closed aide message file).
+
+        FCit will now ask if you want to add users to a newly created
+        group.
+
+09/19/90 - Fred
+        System will now prompt for descriptions when adding or renaming
+        groups.
+        Made system wait for output to finish before hang up.
+
+09/20/90 - Fred
+        Corrected bug that set screen height to 0 when goodbye blurb was
+        shown.  Thanks for pointing that out Centauri!
+
+09/21/90 - Fred
+        Added #SYSOP, #CREDIT_NAME in CONFIG.CIT
+
+                #SYSOP -- The console sysop's name, 63 characters or less
+                #CREDIT_NAME -- what you want to call a "credit"
+
+        Example values:
+
+                #SYSOP          "Fred"
+                #CREDIT_NAME    "minute"
+
+10/05/90 - Fred
+	I've done my best to recover from a major hard drive crash. I
+	hope no new bugs have been introduced by that, but please report
+	anything you see that seems "strange".
+	Also, made it so a sysop can see the initials and password of a
+	user when using the Sysop-Userlog Edit command on the local
+	console.
+
+10/13/90 - Fred Release 26
+
+        Changes to the message base read, an attempt to kill our latest
+        message duplication bug on the net.
+
+        Added config settings for limiting read user log for both regular
+        users & aides.
+
+        You need to add two new settings to your CONFIG.CIT!
+
+                #READLOG        1
+                #AIDEREADLOG    1
+
+        Setting READLOG to 0 prevents regular users from reading the
+        userlog. Setting AIDEREADLOG to 0 and READLOG to 0 prevents aides
+        and regular users from reading the user log.
+
+10/15/90 - Fred
+        Added a flag for protocols that are network or console only.  This
+        means you get to change your external.cit again :)  The new format
+        for protocol lines in external.cit is:
+
+
+
+        Send command  -------------------------------------+
+                                                           |
+        Receive command  ---------------+                  |
+                                        |                  |
+        Block size  ----------+         |                  |
+                              |         |                  |
+        Batch flag  -------+  |         |                  |
+                           |  |         |                  |
+        Console/net  ---+  |  |         |                  |
+                        |  |  |         |                  |
+        Name  --+       |  |  |         |                  |
+                |       |  |  |         |                  |
+                v       v  v  v         v                  v
+
+ #PROTOCOL "CRC Xmodem" 1  0 128  "%a\\dsz rc %f"    "%a\\dsz sc %f"
+
+         Use 0 in the console/net area for normal upload/download
+        protocols, and 1 if the protocol is only for networking, or used
+        strictly from the console.
+
+
+         The Console/net flag let's you have network protocols (like
+        QuickNet) that can't be accessed by your callers.  It's also useful
+        for sysop uploads from floppies.  Put your favorite file manager in
+        and set the Console/net flag to 0 to use this feature.  That way
+        you can have a program (command.com, norton commander, etc) that
+        you use to upload, and the callers can't access it.
+
+        I also fixed various bugs in the checking of protocol lines.
+        Before, if you made an error in the #PROTOCOL setting, it would
+        have caused problems to FCit, but didn't complain about it.  Now it
+        complains more (isn't this what we all need?).
+
+10/18/90 - Fred - Release 27
+
+        Added a new option for your ROUTE.CIT called default routing.  This
+        will be handy if you don't know the routes to some of the boards
+        out there, or only net with one board.  It goes like this:
+
+        #DEFAULT_ROUTE  "Fred's Toy"
+
+        This will cause all mail where the route to the board can't be
+        found to be forwarded to the default board.  Hopefully they know
+        what to do with it :)
+
+11/04/90 - Fred - Release 28
+
+        Added a super-huge supershell.  If for some reason, you don't have
+        the environment variable COMSPEC set correctly, the system will
+        crash on batch-mode supershells.  Check this with the DOS command
+        SET before running.  See your DOS manual for an explanation of SET
+        and COMSPEC.  The new supershell will swap to XMS, EMS memory, or
+        to disk.  Now FredCit only uses about 2.5k on supershells.  Pretty
+        keen, hunh?
+
+        Added code to prompt user to see if they want to log off after
+        uploads or downloads.
+
+        Added a fix for files with no, or illegal date stamps.
+
+        Added backspace as an alias for '-' when switching rooms.
+
+11/18/90 - Fred, Release 28a
+
+        Numerous fixes to directory and file info stuff.  This should fix
+        more problems (the final fix to .ri?).
+
+        Added code for -s (shell/door mode) systems:
+            o   Function key F2 will now drop back to the main board when a
+                caller is on. (shell mode only).
+            o   The modem init string is now not sent if in shell mode.
+
+11/23/90 - Fred
+
+         Redesigned parts of shell/door mode (-s).  Timeouts should always
+        drop to DOS (or the board that called FCit).  It now acts more like
+        a normal Citadel login.  Users will need to press 'L' to log in
+        now.
+
+         Added a count down for autologoff on downloads.
+
+         Modified the chat mode.  Let me know if you have any problems in
+        long chat sessions now.
+
+                        =-=-=-=- Warning -=-=-=-=
+        You need 300+k of disk space free for supershells, unless you've
+        300+k of free XMS or EMS 4.0 memory.  If you don't have either the
+        memory or free disk space, FCit will crash after the program is
+        run.
+
+11/24/90 - Fred (who else works on this anymore anyway?)
+
+         Modified function key handler.  Alt-E to start a cron event should
+        work ok on network dial out now.
+
+11/27/90 - Fred
+
+         Fixed a problem where .RT would read from the home path if the
+        room's directory was invalid.  Also added messages for invalid room
+        paths on various operations.
+
+12/01/90 - Fred - Release 29
+
+         Added support for local netting with shell mode FredCits.  The
+        batch files that go with this are still under development.  There
+        is now a new event type for local netting, #DO LOCAL.  It's exactly
+        the same format as the current #DO NETWORK cron command.  Expect
+        more information on this when the batch files are ready.
+
+         Added a new format character for #PROTOCOL in EXTERNAL.CIT, %n.
+        %n gives you the name of the user on-line.  Be careful, the users
+        name may be more then one word.  Current format character macros
+        for #PROTOCOL are:
+                %a      application path from your CONFIG.CIT.
+                %p      port number or LOCAL if on console.
+                %s      baud rate (or 2400 if on console).
+                %f      file name(s)
+          *new* %n      user log in name (may be more then one word).
+
+
+         Corrected formatting for "can not find room local" message during
+        netting.
+
+         As an aide in finding incorrectly configured paths, attempts by
+        FredCit to change to an invalid directory now produce an aide
+        message.
+
+12/03/90 - Fred
+
+         Added a trap for mail routed in a circular path.
+         Added a test for overflow on a mail path
+
+12/08/90 - Fred
+
+         Made aide & sysop prompts fancier
+         Prettier cron display
+         Made free RAM display in .RS bold when there's not enough memory
+        for QuickNet (<180000 bytes).
+         Lint clean up.
+
+12/09/90 - Fred Release 30
+
+         Changed the custom commands created with #EXTERNAL in the
+        External.Cit file.  Now expanded commands (like .read) will NOT run
+        the external program, but hot-key commands like 'n' will if you
+        have #EXTERNAL setting for them.
+
+         Changed the < and > commands to tell the user if the room isn't a
+        window.
+
+         Added ISO color support to messages.  Colors are set using ^Aa
+        through ^Ah for foreground (text) colors.  ^AA through ^AH sets the
+        screen background color.  Allowable message attributes are now:
+
+        NORMAL                      ^A0     BLINK                  ^A1
+        REVERSE                     ^A2     BOLD                   ^A3
+        UNDERLINE                   ^A4
+
+        BLACK FOREGROUND	        ^Aa     BLACK BACKGROUND       ^AA
+        RED FOREGROUND		        ^Ab     RED BACKGROUND         ^AB
+        GREEN FOREGROUND	        ^Ac     GREEN BACKGROUND       ^AC
+        YELLOW FOREGROUND	        ^Ad     YELLOW BACKGROUND      ^AD
+        BLUE FOREGROUND	            ^Ae     BLUE BACKGROUND        ^AE
+        MAGENTA FOREGROUND	        ^Af     MAGENTA BACKGROUND     ^AF
+        CYAN FOREGROUND	            ^Ag     CYAN BACKGROUND        ^AG
+        WHITE FOREGROUND	        ^Ah     WHITE BACKGROUND       ^AH
+
+        You can use BOLD (^A3) to get twice as many foreground text colors.
+        Just use BOLD before the color value.  Normally, colors are dim, so
+        Yellow really looks brown.  Using BOLD first, yellow comes out as a
+        true yellow.
+
+
+12/13/90 through 12/16/90 - Fred Release 31
+
+         Most things can be done in color now, (titles, surnames, user
+        name, room names, etc).
+
+         Made #FORCELOGIN (from Config.Cit) work in door/shell mode.
+
+         Modified the way wrapping takes place.  This may fix some
+        problems associated with a term width of 80 acting like 81.
+
+         Made several internal speedups to .CFG file reads, and the room
+        name search routines.
+
+         Made 'Continue' at the edit prompt display the text already
+        entered.  Also made a small bug fix to backspace when entering
+        messages.
+
+         New feature: Use ^A? when doing message entry for help on ANSI.
+
+         Made room description line show ever time a room is entered.  The
+        room description file will only show the first time.
+
+         Changed external editor commands.  The format characters for
+        editor commands now are:
+
+	        %f	file name (message.apl).
+	        %p      port: 0-4	(0 is local)
+	        %b      baud: 300|1200|2400|4800|9600|19200
+        	%a	application file path.
+                %n      user login name (may be more then one word).
+ 		%s	sysop flag (1 if sysop, 0 if not)
+
+         Changed external commands (docs were in error anyway). Allowed
+        format characters for external commands are now:
+
+                %f      door info file name (DORINFO?.DEF)
+		%p      port: 0-4	(0 is local)
+		%b      baud: 300|1200|2400|4800|9600|19200
+		%a	application file path.
+                %n      user login name (may be more then one word).
+ 		%s	sysop flag (1 if sysop, 0 if not)
+
+ 	 Improved allowed command line prefixes for protocols, rooms and
+        editors:
+
+ 		@	Don't save & clear screen
+ 		$	Use DOS COMMAND.COM to run command (allows path,
+                        batch files)
+ 		!	Use supershell (all but about 2.5k free!)
+                ?       Don't write DORINFO?.DEF or USERDATO.APL (faster)
+
+         Changed the way .kr and related commands display rooms when ANSI
+        or IBM characters are on. Still playing with this.
+
+12/19/90 - 12/22/90 - FJM Release 32
+
+         Added a check for bad message headers, any messages netted in
+        without a digit as the first character of the source ID will be
+        rejected.  This should trap some dup messages being generated
+        elsewhere on the net.
+
+         Moved parts of chat, uploads, downloads, aide and sysop commands
+        to overlays.  Saved about 4k of memory.
+
+         Started conversions for making the source more portable to other
+        compilers and systems.
+
+         Prettier prompts.
+
+
+12/30/90 - FJM Release 33
+
+         Integrated CoopCit code from JJ & Zen for OUTPUT.APL & INPUT.APL
+        (TurboCit & DragCit door interface files) compatibility.  Supported
+        values in OUTPUT.APL are:
+
+        Name            Dec Function
+        =============   === ================================
+
+        APL_EXTEND      254 Extended field, for expansion
+        APL_END         255 Last field in file
+        APL_NAME        32  name of current user
+        APL_SURNAME     33  surname of current user
+        APL_TITLE       34  title of current user
+        APL_SYSOP       35  is user a sysop?  1 or 0
+        APL_AIDE        36  is user an aide?  1 or 0
+        APL_TWIT        37  is user twitted?  1 or 0
+        APL_EXPERT      38  is user in expert mode?  1 or 0
+        APL_CREDITS     39  number of minutes left to the user
+        APL_PERMANENT   40  user have a permanent acct? 1 or 0
+        APL_NETUSER     41  user have net access?  1 or 0
+        APL_NOMAIL      42  can user send mail?  1 or 0
+        APL_VERIFIED    43  Verified user? 1 || 0
+        APL_NULLS       50  how many nulls do they need?
+        APL_LINEFEED    51  line feeds?  1 or 0
+        APL_UPPERCASE   52  upper case only terminal?  1 or 0
+        APL_ANSION      53  ANSI?  1 or 0
+        APL_COLUMNS     54  number of columns on screen
+        APL_LINES       55  number lines on screen
+        APL_ULISTED     56  unlisted userlog entry? 1 or 0
+        APL_MDATA       57  on what com port?
+        APL_BAUD        58  what baud are they at? (300-9600)
+        APL_IBM_GRAPHIC 59  IBM Graphics?  1 or 0
+        APL_TRM_FORE    60  foreground color code, 0-7.
+        APL_TRM_BACK    61  background color code, 0-7.
+        APL_TRM_NORM    62  the rest of them..
+        APL_TRM_BOLD    63
+        APL_TRM_INVR    64
+        APL_TRM_BLINK   65
+        APL_TRM_UNDER   66
+        APL_NODE        70  What node are we on?
+        APL_REGION      71  Region of the BBS
+        APL_HALL        73  name of hall we are in
+        APL_ROOM        74  name of room we are in
+        APL_TEMPPATH    75  full 'temp' path for scratch files
+        APL_APPLPATH    76  full applications directory path
+        APL_HELPPATH    77  full help file path
+        APL_HOMEPATH    78  full Citadel home path
+        APL_ROOMPATH    79  full path of room descriptions
+        APL_MSGPATH     80  full path for message base
+        APL_PRINTPATH   81  name of printer capture file
+        APL_TRAPFILE    82  full filename of the TRAP file
+        APL_ACCOUNTING  83  is system accounting on?
+        APL_TRANSPATH   84  full path of mail & transient files
+        APL_ATTR        90  main text attribute
+        APL_WATTR       91  Status line attribute
+        APL_CATTR       92  highlighted attribute
+        APL_UTTR        93  underlining attribute
+        APL_BATTR       94  Border attribute
+        APL_TRANSMIT    95  number characters sent by Citadel
+        APL_RECEIVE     96  number characters received
+        APL_SYSREQ      97  Has SysReq been pushed? 1 or 0
+        APL_CONLOCK     98  are Fkeys locked out? 1 or 0
+        APL_ECHO        99  display paused w/F4  1 or 0
+        APL_CHAT       100  is chat mode on or off? 1 or 0
+        APL_BELLS      101  are bells on? 1 or 0
+        APL_PRINTING   102  is alt-p printer catch on? 1 or 0
+        GRP_IN         110  The user is in this group..
+
+        Supported fields in INPUT.APL are:
+
+        Name            Dec Function
+        =============   === ================================
+
+        APL_EXTEND      254 Extended field, for expansion
+        APL_END         255 Last field in file
+        APL_SURNAME     33  surname of current user
+        APL_TITLE       34  title of current user
+        APL_SYSOP       35  is user a sysop?  1 or 0
+        APL_AIDE        36  is user an aide?  1 or 0
+        APL_TWIT        37  is user twitted?  1 or 0
+        APL_EXPERT      38  is user in expert mode?  1 or 0
+        APL_CREDITS     39  number of minutes left to the user
+        APL_PERMANENT   40  user have a permanent acct? 1 or 0
+        APL_NETUSER     41  user have net access?  1 or 0
+        APL_NOMAIL      42  can user send mail?  1 or 0
+        APL_VERIFIED    43  Verified user? 1 || 0
+        APL_NULLS       50  how many nulls do they need?
+        APL_LINEFEED    51  line feeds?  1 or 0
+        APL_UPPERCASE   52  upper case only terminal?  1 or 0
+        APL_ANSION      53  ANSI?  1 or 0
+        APL_COLUMNS     54  number of columns on screen
+        APL_LINES       55  number lines on screen
+        APL_ULISTED     56  unlisted user log entry? 1 or 0
+        APL_IBM_GRAPHIC 59  IBM Graphics?  1 or 0
+        APL_TRM_FORE    60  foreground color code, 0-7.
+        APL_TRM_BACK    61  background color code, 0-7.
+        APL_TRM_NORM    62  the rest of them..
+        APL_TRM_BOLD    63
+        APL_TRM_INVR    64
+        APL_TRM_BLINK   65
+        APL_TRM_UNDER   66
+        APL_HALL        73  name of hall we are in
+        APL_ROOM        74  name of room we are in
+        APL_TRANSMIT    95  number characters sent by Citadel
+        APL_RECEIVE     96  number characters received
+        APL_SYSREQ      97  Has SysReq been pushed? 1 or 0
+        APL_ECHO        99  display paused w/F4  1 or 0
+        APL_CHAT       100  is chat mode on or off? 1 or 0
+        APL_BELLS      101  are bells on? 1 or 0
+        APL_PRINTING   102  is alt-p printer catch on? 1 or 0
+        GRP_ADD        111  Add the user to this group..
+        GRP_DEL        112  Remove the user from this group..
+        MSG_NAME       200  Name of the person the message is
+                            from, default: Nodename
+        MSG_TO         201  Name of the person the message is
+                            to, default: Public Message
+        MSG_GROUP      202  Group the message is for,
+                            default: Public Message
+        MSG_ROOM       203  Room the message is in,
+                            default: Current Room
+
+        Most of these have never been tested.  We can fix problems as they
+        show up.  Thanks for your help on testing this.
+
+         Various internal changes for portability.
+
+         Prevented word wrap on room names in .kr display.
+
+         Corrected a bug where the cron events were not correctly read
+        when reconfiguring FCit.
+
+12/31/90 - 1/6/91 FJM Release 33a
+
+         Changed "Special Time" to "Free Time" messages in an attempt to
+        be more descriptive.  See your GRPDATA.CIT for more info.
+
+         Started changing command prompts so that commands which expect a
+        word instead of a character (like .h and .ri) will present the user
+        with a ':' prompt.
+
+         Modified the swap code to correctly report full disk errors.  The
+        swap file (FCIT.SWP) is no longer a hidden file.
+
+         Fixed time display to correctly display daylight savings time
+        when the time zone string is displayed.
+
+1/6/91 FJM Release 34
+
+         Added command line option -l for login at the command line.  For
+        a user with the initials "rjn" and the password "mykidsnames" you
+        might start FCit like this to log in:
+
+                FCIT -l rjn;mykidsnames
+
+         FCit will now read in INPUT.APL, USERDATI.APL, MESSAGE.APL, and
+        README.APL door interface files when started in door/shell mode
+        (use -s). This can be fun :)
+
+1/7/91-1/11/91 FJM Release 35
+
+         Fixes to cron.tab reads.
+
+         Added a new command line option -u to log in a user named on the
+        command line.  For example:
+
+                FCIT -U "Your Name Here"
+
+        would log you in as "Your Name Here" if an account for that user
+        exists.
+
+         Removed title screen pause in shell mode.
+
+         Fixed problem where door interface files were not always in the
+        application directory.
+
+         Fixed status line update with bells or chat on (darn C formatting
+        program!).
+
+         Fixed a bug in .EH (Enter Hallway).
+
+1/12/91 FJM Release 35a
+
+         I went on a bug hunt, and fixed four places where problems could
+        occur with long names (hall, user, group).  Here's a bug fix
+        release for you all!
+
+1/16/91-1/18/91 FJM Release 36
+
+         Sysop New user verification (.SN) now allows you to edit the
+        user's account, and to add them to groups.
+
+         Improved .AL display.
+
+         At this point, all prompts that wait for you to type something in
+        (like .RI .RD .AL .H and .L) use a ':' at the end of the prompt.
+        Let me know if any of these look messy.
+
+         Made .SU and .EC prettier.
+
+         First compile with TC++ 1.01
+
+         Added #SWAPFILE for Config.Cit.
+
+        !!!!!!!!!!! You must update your Config.Cit !!!!!!!!!!!!!
+
+        Set #SWAPFILE to the full name of the file you want FCit to use for
+        temporary space when swapping to disk in supershell.  This file is
+        only used if FCit doesn't find enough EMS 4.0 or XMS memory to swap
+        to.  Example:
+
+                #SWAPFILE C:\FCIT\FCIT.SWP
+
+        This can be a HUGE file (typically 400k, larger for larger message
+        bases), so take care that you have enough free disk space for it.
+        If you are running the Floppy FredCit, and have a hard drive, you
+        may want to use the hard drive for the swap file (it probably won't
+        fit on your floppy, and it's soooo slooow!).  Remember, this file
+        is only used if you don't have enough EMS 4.0 or XMS memory.
+
+         Added defaults to .S#
+
+         ^A codes are now displayed correctly when entering room names,
+        etc.
+
+         Improved the way ANSI surnames and titles are handled.
+
+         Made Goto and Bypass go to the next room with new messages first,
+        then check for window rooms.  (NB:  If you are running with
+        #SUBHUBS 0, this doesn't apply to you).
+
+         Added a message showing the valid keys during screen pause when
+        helpful hints are on.  Note that it's a different message for
+        aides, and K only shows up when a user can use it.
+
+01/20/91 FJM - Release 36a
+
+         Fixed a bug in the status line display.  Persons with very long
+        nyms could crash your board.
+
+         Added a time display when no one is logged in.  The time display
+        on the status bar uses your verbose time stamp.  You can change
+        this to change the appearance of the status bar time.
+
+01/21/91 FJM - Release 36b
+
+         Fixed a minor bug in the goto code.  In some cases, it wouldn't
+        hit all the windowed rooms.
+
+01/28/90 FJM
+
+         Improved cron display
+
+         Added a new sysop cron function, Next, which lets you set which
+        cron event is next.
+
+         Made the current event the default for all cron functions.
+
+         Made the room edit and entry prompts inverse.
+
+         Improved some of the sysop and aide sub menus.
+
+         Made the text display in the continue function of message entry
+        unstoppable.
+
+         Changed Upload so that only non-batch protocols ask if the user
+        wants to hang up after the transfer.
+
+         Made "Can't see message at..." message only visible when debug is
+        on.
+
+         Reset colors before messages are displayed.
+
+         Fixed the Console Lock display on the status bar.
+
+         Fixed Upload so that batch uploads do not force user to enter
+        comments for all the files that don't have them.
+
+         Fixed Sysop Reset file info so it wouldn't reset file info on
+        files that were in the directory.
+
+         Made last old on new, and 23 lines per screens defaults for new
+        users.  Currently new user defaults are:
+
+                Aide                    FALSE
+                Auto next hall           FALSE
+                Expert                  FALSE
+                IBM graphics            Current setting
+                Last old on new         TRUE
+                Line Feeds              In CONFIG.CIT
+                Nulls                   In CONFIG.CIT
+                Room descriptions       TRUE
+                Screen Lines            23
+                Screen Width            In CONFIG.CIT
+                Sysop                   FALSE
+                Tabs                    In CONFIG.CIT
+                Terminal Type           TTY
+                Twit                    In CONFIG.CIT
+                Unlisted                FALSE
+                Upper Case              In CONFIG.CIT
+
+        The default setting area of FCit still needs work.
+
+02/03/91 - FJM
+
+         Implemented a screen saver!  You have yet another Config.Cit
+        value to set.  This one is #SCREENSAVE <seconds>  Set it to 0 to
+        disable the screen saver.  To have your screen blank after 90
+        seconds, you would use;
+
+                #SCREENSAVE     90
+
+        the screen saver only runs when no one is logged in.
+
+02/04/91 - FJM Release 37
+
+         Added recognition of verbose modem response codes while netting.
+        What does that mean?  Well, for one thing, it won't wait to timeout
+        when it gets a busy signal netting now.  FredCit recognizes these
+        codes when dialing out to net:
+
+	        OK
+	        CONNECT
+	        RING
+	        NO CARRIER
+	        ERROR
+	        CONNECT 1200
+	        NO DIALTONE
+	        BUSY
+	        NO ANSWER
+	        CONNECT 2400
+
+        Anything else, it calls "UNKNOWN".  To make the best use of these,
+        take a look at your #DIAL_INIT in Config.Cit.  It should have an X2
+        in there, or if you have a very smart modem, try a X4 (Hayes
+        Smartmodem 2400 set).
+
+         Added code to make sure application interface files are written
+        to and read from the application directory.
+
+         Reverse the sense of BELLS and CHAT in the OUTPUT.APL file.
+
+02/10/91 - FJM Release 37a (bug fix release)
+
+         Modified edit prompt to fix incorrect prompts.
+
+         Speed-up for input routines.
+
+         Made screen saver turn screen back on when F6 is hit.
+
+         Changes to the way the Continue command works in edit mode.
+
+         Made it possible to use pause/next/jump/stop in the '?' menu and
+        still see external commands.
+
+         Eliminated pause-prompt before login.
+
+         Changed status line to correctly show system request status.
+
+         Changes to make hello blurbs show up in shell/door mode.
+
+         Reverse the sense of BELLS and CHAT in the OUTPUT.APL file again,
+        (it was right before).  In INPUT.APL & OUTPUT.APL, setting the chat
+        or bells value to 1 turns the feature on, setting it to 0 turns
+        the feature off.
+
+         Changed the way verbose response code recognition works, the net
+        will abort if any of these codes are received from the modem on
+        dial out:
+        	NO CARRIER
+        	ERROR
+        	NO DIALTONE
+        	BUSY
+        	NOANSWER
+
+02/28/91-03/13/91 - FJM Release 38
+
+         First compile with TC++ 2.0 (protected mode).
+
+         The screen saver will now not 'wake up' when modem input is
+        detected unless a user is logged in.
+
+         Corrected a bug where sometimes while running FCIT with the -v
+        parameter to execute events, a 'NO CARRIER' would be incorrectly
+        detected.
+
+         Moved the idle time routines (screen saver, status bar time) to
+        the kernel code.  This will improve performance on systems with
+        slow drives.
+
+04/04/91 - FJM Release 38a
+
+         Changed compiler options, and reduced the amount of static data
+        in an attempt to eliminate crash problems on some systems.
+
+04/09/91 - FJM Release 38b
+
+         Bug fix in internal format routine suggested by Joo Sama.
+
+04/10/91 - FJM Release 38c
+
+         Prevented posting of zero-length messages in MESSAGE.APL.  These
+        sort of messages were being generated by Tracy Horton's QuickNet
+        file attach programs.
+
+         Fixed problem with ANSI being turned off for header of next
+        message after pressing 'n' (next) while messages are being viewed.
+
+         Disabled .RB (Read By user) for non-sysops in Anonymous rooms.
+
+         Prevented display of "(Node)" in user log for non-aides viewing
+        unlisted nodes.
+
+         Added a yes/no prompt to the L (login/logout) command when user
+        is already logged in.
+
+04/11/91 - FJM
+
+         Added a delay when doing events from the command line.  This
+        prevents extra modem data from stopping events.
+
+04/17/91 - FJM
+
+         Fix to .RB for sysops.
+
+         Added checks for corrupted memory.
+
+         Modified screen saver.
+
+04/19/91 - FJM Release 39
+
+         Added a critical error handler for things like missing floppy
+        disks and bum drives.  These won't crash FCit any more.
+
+         Increased stack size by 3k.  A bit less memory, but safer.
+
+05/06/91 - FJM Release 39a
+
+         Fix for crashes on some systems.
+
+         New prompt for regular (not supershell) shells.
+
+         Reduced memory use in supershell.
+
+         FCit now allows released messages to net.
+
+05/18/91 - FJM Release 39b
+
+         Speed-up to keyboard entry routine iChar()
+
+         Fixed status line when #IDLE_TIME missing, or set to 0.
+
+         Better checking for blank messages.
+
+         Sysop copy command now does something.  Try 'C' when messages
+        are scrolling by.
+
+         We no longer use the protected mode compiler and linker, it
+        appears this was causing some systems to crash.
+
+05/21/91 - FJM Release 39c
+
+         General cleanup in the file section.
+
+         Added extended file descriptions.  FCit will now create a
+        filename.DES file when files are uploaded.  The user enters
+        extended comments for the file entries.  The limit on the
+        size of the added comments is the same as the maximum message size.
+        The descriptions show up in verbose info file reads (.RVI).
+        Description (.DES) files are plain text files with ANSI, ISO
+        colors, and IBM Graphics support. Description files may be
+        uploaded or downloaded separately.  Spiffy?
+
+         Made the memory check optional (new -m flag).
+
+         Made a new tool, 4DOS2FI to convert 4DOS (a nifty DOS shell) file
+        comments to FILEINFO.CIT entries.
+
+         When FCit crashed, sometimes the crash message would repeat
+        endlessly, this is now fixed.
+
+         Added a check for configured directories in CONFIG.CIT.  If they
+        don't exist, FCit will crash, displaying an error message.
+
+         Extended nym, title & surname entry in .su to 30 characters.
+
+05/25/91 - FJM (test version)
+
+         Testing new iChar() for modem speed-up.
+
+         FCit now saves the counters it uses for rotating blurbs.
+
+         Renamed ETC.DAT to ETC.TAB.  Delete your old ETC.DAT file!
+        All FCit temporary configuration files now end with .TAB, allowing
+        you to force rebuilding of these files by doing a DEL *.TAB in your
+        home path.
+
+05/26/91 - 05/26/91 FJM Release 39d
+
+         Made all menus and help files rotate (like the blurbs do).
+
+         Expanded the .SE (Sysop Enter) command - it now allows you to
+        choose which data file you wish to read.  The choices are:
+
+                <C>onfiguration file    CONFIG.CIT
+                <E>xternal file         EXTERNAL.CIT
+                <G>roup file            GRPDATA.CIT
+
+        A few things are *not* set when you use .SEC (Sysop enter
+        configuration file).  These are;
+
+                #MAXTEXT
+                #MAXFILES
+                #MESSAGEK
+                #NMESSAGES
+
+        Additionally, the screen colors do not change after .SEC until you
+        restart FCit, or a new user logs in.
+
+         Added a few new console (local) keys
+
+           Key             Function
+           ============    ========================================
+           Up arrow        Next hall
+           Down arrow      Previous hall
+
+           Right arrow     Next room
+           Left arrow      Previous room
+
+           Page up         Add 10 minutes to logged in users time
+           Page down       Subtract 10 minutes from logged in user
+
+         Fixed the 'sleepy.blb' timer.
+
+         Added a "Confirm (y/n)?" to chat requests.
+
+5/28/91 - 6/15/91 FJM Release 40
+
+         Added a timer to "Waiting for transfer" part of netting.  If the
+        other board doesn't send anything in an hour (very unlikely), or a
+        key is pressed on console, the BBS aborts the net attempt.
+
+         Added a safety check to the 'W' command in login scripts.  If the
+        modem is doing a buffer-dump on the BBS (rapidly pouring characters
+        in), the system will timeout after 8 seconds.  You may have to
+        extend the value for #WAIT_TIMEOUT for some nodes, since
+        #WAIT_TIMEOUT is now the time until the string is matched, where it
+        used to be the time the system would wait with no input coming in.
+
+         Speed-ups to all modem routines.
+
+         Minor changes/fixes to the file description routines.
+
+         Added a confirmation prompt for when mail is sent to the default
+        route.  Enter accepts the default route.
+
+         General cleanup of the file upload/download code.
+
+         Added a warning and aide room message for when a room has more
+        then #MAXFILES files in it.
+
+         Added a check for downloads of bad file names using wild-cards.
+        We needed this because of the (in my opinion silly) practice of
+        giving remote sysops access to the home path via a directory room.
+        I strongly recommend against this, but it is a tad safer now.
+
+         The characters '^' and '&' are now illegal in file names.  These
+        are used by 4DOS for command separators.
+
+         Enhanced aide room messages during netting.  Also changed the
+        circular mail path check to ignore the first 'loop' through the
+        system.  This should prevent us from loosing rejected mail
+        messages.
+
+         Enhanced the aide room message for 'Invalid directory'.  This
+        message will now show the current room name if a user is logged in.
+
+         Created an internal file editor - more on this later.
+
+         .AF will now prompt for all files with 'blank' comments.
+
+         Added .KY for Known anonYmous rooms.
+
+         Added a Quit option to the .AE menu.  The default for the 'Save
+        room' menu is Yes if you select save, No if you select quit.
+
+         Changed the Known room display to use bold instead of reverse.
+
+         Changed the room prompt to use a '>' when IBM graphics characters
+        are enabled for 'normal' rooms.  But what's a 'normal' Citadel room
+        anyway?
+
+         Changed the read commands for sysops in anon rooms.  When doing
+        verbose reads, the user names show up.  But if the sysop is doing
+        non-verbose reads, the room looks as it does to other users (****
+        in the name field).
+
+         Changed the way external commands are displayed in the ? menu.
+
+         Added a display of external commands to the .KA menu.
+
+         Changed the .AE menu anon room command from 'o' to 'y' to match
+        the .KY command.  KNOWN.MN? and AIDE.MN? and various help
+        files need to be updated.
+
+         Fixed psycho-chicken filter (Alt-B).
+
+         Added border attribute support for VGA.
+
+         Added border color support for EGA.  Note: EGA (apparently)
+        doesn't support reading the color palette.  For now, EGA users are
+        going to have to set the RGB color rather the then the attribute
+        for the border.  RGB colors are made by combining the appropriate
+        bits (unfortunately).  What you do is make a color up using the
+        following form:
+
+                Bit     Affect (EGA color systems only)
+
+                0       Blue
+                1       Green
+                2       Red
+                3       Secondary Blue
+                4       Secondary Green
+                5       Secondary Red
+
+        now, if you don't understand that, play with setting #BATTR in your
+        config.cit to numbers in the range of 0-63.  If you don't use EGA,
+        ignore all this.
+
+         Several enhancements to the video routines, including some
+        (untested) support for console VGA 40 line mode, and EGA 35 line
+        mode. We now support 25,35,40,43, and 50 line modes. Sheesh!
+
+         Enhanced .SHK (Sysop Hallway Kill) to ask if you want to exclude
+        rooms from the hall before deleting it.
+
+         Added an option .SGU (Sysop Group User global membership) to ask
+        if you want to Add/Remove/Both a user to/from groups.
+
+         ANSI sequences now show up as ^A codes on console when debug is
+        on (in other words, ^Ac shows as green, but also as ^Ac). To
+        prevent this, turn either debug or ANSI off.
+
+         ANSI sequences will not net now, except in title, surname, or
+        message text.  All other net fields have ANSI stripped when netted
+        out.
+
+         New user accounts now have ANSI stripped from nyms.
+
+6/19/91 - FJM Release 40a
+
+         Fix for memory loss bug in the internal editor (used for extended
+        file descriptions).
+
+6/20/91 - 7/8/91 Release 40b
+
+         Extended #NODENAME and #NODEREGION in Config.Cit to 30
+        characters.
+
+         Extended status bar (bottom of screen) to support 19.2k/38.4k
+        baud.  19.2k and 38.4k baud support is still incomplete.  9600
+        *should* work, but I've no way of testing it here.
+
+         Fixed format of .RVD and .RVI.
+
+         Cleanup in cron events, and the 'X' sysop command.
+
+         Reduced heap memory usage.
+
+         .SU (Sysop Userlog edit) now allows you to set all messages to
+        new for a user.
+
+         Changed sleepy_timer repeat time to 5 seconds.  Idle timeout is
+        now 32 seconds.
+
+         First pass at making idle timer to work for console as well as
+        remote -- test this one!
+
+         Changed the way file comments work.  When setting with .af, the
+        aide/sysop is prompted for all files with blank comments.  Users
+        are only prompted for the files they uploaded.
+
+         Improved overall speed of system with a faster timer routine.
+
+         The screen saver will now clear if the shift, ctrl, alt, or
+        insert keys are pressed.
+
+         Fixed the prompt after the <F6>XN key sequence (I know you were
+        all waiting for that).
+
+         FCit will now allow netting in shell mode (thanks for the tip
+        Zen).
+
+         Speed-up to file viewing routines.  Also eliminated double CR
+        display in file viewing.
+
+         Modified cron looping (-v command option).
+
+         Incomming routing fields now have ANSI stripped (I warned you!).
+        This includes things like room, group, and node names, region
+        names, and user names.  Room names will still have colors
+        locally.  Titles and surnames still net with color.
+
+9/21/91 FJM Release 41
+
+         Backed out most of the input function changes to correct problems
+        with the new system timeout function.  All of the rest of the
+        speed-ups are still here, including a new speedup to the old
+        input code (did that make sense to you?).
+
+         WARNING: Shell mode automatic logins are broken in this release.
+        If you are using the -u or -l command line options for starting
+        FCIT, stick with v40a for a while.  On the brighter side, shell
+        mode netting is working.
+
+9/22/91 - ??/??/?? FJM 41x
+
+         Reorganized internal data.
+
+         Created a new way to get the time.  Faster!
+
+         Added sysop message nyms (console only)
+
+         Fixes to file description entry (prevent looping prompt).
+
+         Sysops can now use .ELE (Enter Limited-access Exclusive message)
+        to send mail to everyone in a group.
+
+         Expanded the information in CRASH.CIT on system crash.
+
+         Zapped cron events can now be un-zapped by using the .SCZ (Sysop
+        Cron Zap/unzap) command.
+
+         .SCL (Sysop Cron List) can now be stopped (S) or paused (P).
+        Thanks JJ!
+
+         Cron events can now be forced.  Forced events are
+        automaticly un-zapped, reset, and made the next event.
+        Useful for shutting down the BBS from remote by forcing a
+        zapped exit event.  Thanks for the ideas JJ!
+
+         Expanded maximum message path to 255 characters.
+
+         First compile with Borland C++ 3.0
+
+         Changed wordprocessor for documentation, now using MS Word for
+        Windows 2.0.
+
+         New document included: FCITUSER.ASC, by Jeff Cox.
+
+         During the screen save time, a 'wandering' display of the time
+        and last caller are shown. The time field is displayed using the
+        format defined in #VDATESTAMP in your CONFIG.CIT.
+
+        For reference, the following chart defines the 'special'
+        characters allowed in #VDATESTAMP and #DATESTAMP:
+
+        ีอออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+        ณ                                                     ณ
+        ณ   %a  abbreviated weekday name                      ณ
+        ณ   %A  full weekday name                             ณ
+        ณ   %b  abbreviated month name                        ณ
+        ณ   %B  full month name                               ณ
+        ณ   %c  standard date and time string                 ณ
+        ณ   %d  day-of-month as decimal (1-31)                ณ
+        ณ   %D  day-of-month as decimal (01-31)               ณ
+        ณ   %H  hour, range (0-23)                            ณ
+        ณ   %I  hour, range (1-12)                            ณ
+        ณ   %j  day-of-year as a decimal (1-366)              ณ
+        ณ   %m  month as decimal (1-12)                       ณ
+        ณ   %M  minute as decimal (0-59)                      ณ
+        ณ   %p  locale's equivaent af AM or PM                ณ
+        ณ   %R  year in Roman numerals with century           ณ
+        ณ   %S  second as decimal (0-59)                      ณ
+        ณ   %U  week-of-year, Sunday being first day (0-52)   ณ
+        ณ   %W  week-of-year, Monday being first day (0-52)   ณ
+        ณ   %w  weekday as a decimal (0-6, sunday being 0)    ณ
+        ณ   %x  standard date string                          ณ
+        ณ   %X  standard time string                          ณ
+        ณ   %y  year in decimal without century (00-99)       ณ
+        ณ   %Y  year including century as decimal             ณ
+        ณ   %Z  timezone name                                 ณ
+        ณ   %%  the percent sign                              ณ
+        ณ                                                     ณ
+        ิอออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+         Prevented the characters '>','<', and '|' from being sent to an
+        application on the command line.
+
+         The -m command line option now turns on Debug mode on startup.
+        Handy for shell boards with problems.
+
+         For reference, here us what the #PRIVATE settings do:
+
+        Action                                  #PRIVATE setting(s)
+
+        Open system                             0
+        userinfo.blb shown                      1,2,3,4,5
+        closesys.blb shown                      10, 9
+        Prompt for login information,
+        automaticly verified                    3,4,7,8
+        Write new user info to a file           3,4
+        Run newuser application                 5,6,7,8
+        Terminate user after new login          3,4,7,8
+        Store the new logfile info              3,4,7,8
+        Leave a public message in the lobby     1,2
+        Terminate new user after initial login  2,4,6,8,10
+
+        Note:  Console users are prompted for account info, and automaticly
+        verified.
+
+         Improved the spiffy new idle time display in the screen saver
+
+         Added add & delete groups functions to INPUT.APL.
+
+         Added the -i command line option for setting the I/O port to use.
+
+         Modified the number of seconds per day to correct situation where
+        elapsed time could be negative at midnight.  Who knows what
+        problems this might have caused.  FYI: There are 1573040.0391 timer
+        ticks per day, not that you'll ever need to know that...

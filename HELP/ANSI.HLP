@@ -1,0 +1,55 @@
+ 2HELP ANSI0
+
+ ANSI suport is curently very limited. (fair warning)
+
+ ANSI can be turned on and off with the '~' key. If your terminal does not
+support ANSI this will cause garbage to be displayed, at least, and can
+really confuse your terminal. What it will do is make room prompts inverse,
+message headers bold (if your system does bold, mostly only mono systems
+and FredCit in dial out mode do) and let you see diffrent colors in the
+messages that users have inserted using FredCit's special ESC sequences
+(the reason for these is for support of more terminals latter.)
+
+ The Escape sequence starts with a CTRL-A and then a number (currently 0-4).
+ These will give you diffrent special effects for your text.
+
+ What it does:                              What it looks like:
+
+ ^A0 -- NORMAL                                0Normal0
+ ^A1 -- BLINK                                 1Blinking0
+ ^A2 -- REVERSE (inverse)                     2Inverted0
+ ^A3 -- BOLD                                  3Boldface0
+ ^A4 -- UNDERLINE                             4Underline0
+
+ 0, 2, and 1 seem to work for everyone. 3 for the systems mentiond above, and
+4 for mono remote systems and some mono local systems. The BOLD and UNDERLINE
+can cause problems with Color displays.
+
+ FredCit now has ISO color support.  To get a bright color, use BOLD before
+setting the color value.
+
+ FredCit codes for colors:
+
+ BLACK FOREGROUND	        ^Aa      BLACK BACKGROUND       ^AA
+ RED FOREGROUND		        ^Ab      RED BACKGROUND         ^AB
+ GREEN FOREGROUND	        ^Ac      GREEN BACKGROUND       ^AC
+ YELLOW FOREGROUND	        ^Ad      YELLOW BACKGROUND      ^AD
+ BLUE FOREGROUND	        ^Ae      BLUE BACKGROUND        ^AE
+ MAGENTA FOREGROUND	        ^Af      MAGENTA BACKGROUND     ^AF
+ CYAN FOREGROUND	        ^Ag      CYAN BACKGROUND        ^AG
+ WHITE FOREGROUND	        ^Ah      WHITE BACKGROUND       ^AH
+
+        4Normal Colors0       4Bold Colors0
+
+    Forground abcdefgh            abcdefgh
+
+ Background A Aaabbccddeeffgghh0          A 3Aaabbccddeeffgghh0
+            B Baabbccddeeffgghh0          B 3Baabbccddeeffgghh0
+            C Caabbccddeeffgghh0          C 3Caabbccddeeffgghh0
+            D Daabbccddeeffgghh0          D 3Daabbccddeeffgghh0
+            E Eaabbccddeeffgghh0          E 3Eaabbccddeeffgghh0
+            F Faabbccddeeffgghh0          F 3Faabbccddeeffgghh0
+            G Gaabbccddeeffgghh0          G 3Gaabbccddeeffgghh0
+            H Haabbccddeeffgghh0          H 3Haabbccddeeffgghh0
+
+

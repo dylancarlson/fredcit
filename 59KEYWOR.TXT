@@ -1,0 +1,98 @@
+
+/****************************************************************************/
+/* New or Changed Config.Cit keywords for Gcit /59. For the Full config.cit */
+/* Call The Grand Illusion 206-271-9437                                     */
+/****************************************************************************/
+
+/****************************************************************************/
+/*  #FORWARD                                                                */
+/*  This is used to route sysop mail to the account specified by #SYSOP     */
+/*  1 Enables this feature, 0 disables.                                     */
+/****************************************************************************/
+#FORWARD 1
+
+/****************************************************************************/
+/*  #MSGHEAPPAGES      BIG VERSION ONLY                                     */
+/*  Msgheappages defines how many 16K pages of memory will be used for      */
+/*  storing message table entries in the heap.  If there are not enough     */
+/*  pages of memory in the heap to store the entire message table,          */
+/*  virtual memory will be used (XMS, EMS, or a file).                      */
+/*  Note: if you find yourself low on memory, you can decrease this         */
+/*  parameter to get more, but your system might be slower.                 */
+/****************************************************************************/
+#MSGHEAPPAGES  2
+
+/****************************************************************************/
+/*  #VIRTMEM           BIG VERSION ONLY                                     */
+/*  Virtmem stores the name of the virtual memory file for the message      */
+/*  table.  If you know that you have enough heap/XMS/EMS memory to         */
+/*  store the entire table, you can set this to "" (you'll get an error     */
+/*  message if GremCit runs out of memory).                                 */
+/****************************************************************************/
+#VIRTMEM       "WOW"
+
+/****************************************************************************/
+/*  #DUMB_MODEM                                                             */
+/*  #INIT_BAUD                                                              */
+/*  dumb_modem gives alternate baud rate detection methods.                 */
+/*  0 the Citadel looks for response codes from a Hayes Compatable modem.   */
+/*  1 users must type a plurality of carriage returns to determine what     */
+/*  the baud rate is.                                                       */
+/*  2 looks for the HS line on the RI line, you need a special              */
+/*  cable for this trick. It is accurate however.                           */
+/*  3 same as 0 but looks for RING, and then sends #DIAL_RING. Set S0=0.    */
+/*  4 fixes the system at the #init_baud for incoming calls. #baud in       */
+/*     nodes.cit for netting out.                                           */
+/*  5 same as 4 but drops the port speed for 300,1200, and 2400 baud.       */
+/*  6 is same as 5 but drops dtr, changes port rate and issues #DOWNSHIFT   */
+/*     modsetup needs to have &D1. ATH Sent after dtr is dropped            */
+/*     hanging up.                                                          */
+/*  INIT_BAUD tells Citadel what baud rate to init the modem at.            */
+/*  Important: Set INIT_BAUD to your modem's maximum baud rate.             */
+/*  0 = 300, 1 = 1200, 2 = 2400, 3 = 4800, 4 = 9600, 5 = 19200, 6 = 38400   */
+/*  7 = 57600                                                               */
+/****************************************************************************/
+#DUMB_MODEM     4
+#INIT_BAUD      7
+
+/****************************************************************************/
+/*  #DOWNSHIFT                                                              */
+/*  Used in conjunction with dumbmodem 6.  This is the string sent to turn  */
+/*  off your modem's buffering.  This causes slow speed callers to be able  */
+/*  to pause, stop etc.                                                     */
+/****************************************************************************/
+#DOWNSHIFT  "ATO"
+
+/****************************************************************************/
+/*  #CHECKCTS                                                               */
+/*  Setting this to 1 tells Citadel to wait until the CTS line is on        */
+/*  before sending characters to the modem.                                 */
+/*  NOTE: If you have a modem that's faster than 2400 baud, then you'll     */
+/*  quite likely need to set this to 1.  If your modem is 2400 baud or      */
+/*  slower, 0 should do.                                                    */
+/****************************************************************************/
+#CHECKCTS 1
+
+/****************************************************************************/
+/*  #AUTOANSI                                                               */
+/*  0 defaults to tty mode                                                  */
+/*  1 does auto ansi detect                                                 */
+/*  2 defaults to ansi on                                                   */
+/****************************************************************************/
+#AUTOANSI     1 
+
+/****************************************************************************/
+/*  #CONNECTWAIT                                                            */
+/*  Seconds to wait after a connection is made.  This is so the auto ansi   */
+/*  detect will function properly.                                          */
+/****************************************************************************/
+#CONNECTWAIT 5
+
+/****************************************************************************/
+/*  #SCREENSAVE                                                             */
+/*  1. Time the system will wait before blanking the screen.                */
+/*  2. Whether or not it unblanks the screen upon carrier detect.           */
+/*  3. Whether or not it keeps the screen unblanked for duration of call    */
+/****************************************************************************/
+#SCREENSAVE        0  0  0
+

@@ -1,0 +1,63 @@
+ ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+ บ An alias is used as an abrevation to a nodes name for routing. So youบ
+ บ could type '.EEFred @ FT' in stead of '.EEFred @ Fred's Toy          บ
+ บ The format is: #ALIAS  abrevation  full_nodename                     บ
+ ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+#ALIAS "chf"            "C' Hackers Forum"
+#ALIAS "hak"            "C' Hackers Forum"
+
+#ALIAS "BBI"            "Bukaroo Banzai Institute"
+
+#ALIAS "51L"            "Challenger 51-L"
+#ALIAS "c51"            "Challenger 51-L"
+
+#ALIAS "HON"            "Honalee"
+#ALIAS "H"              "Honalee"
+
+#ALIAS "RD"             "Red Dwarf"
+
+#ALIAS "tlc"            "The Log Cabin"
+
+#ALIAS "OME"            "Omega"
+
+#ALIAS "mem"            "Memory Alpha"
+
+#ALIAS "HC"             "HarDCore BBS"
+
+#ALIAS "AOA"            "Age Of Aquarius"
+
+#ALIAS "ft"             "Fred's Toy"
+
+#ALIAS "nm"             "The NeverMind"
+
+#ALIAS "san"            "The Sanitarium"
+
+#ALIAS "zog"            "The Zog Zone"
+
+#ALIAS "am"             "Amber"
+
+ ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+ บ  Routes tell your system where to send things tring to reach systems บ
+ บ that you are not connected with directly.                            บ
+ บ  #ROUTE  target_system  via_system                                   บ
+ ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+  Format: #ROUTE  system  send_vila
+
+#ROUTE  "Challenger 51-L"       "C' Hackers Forum"
+
+#ROUTE  "HarDCore BBS"          "C' Hackers Forum"
+
+#ROUTE  "Omega"                 "C' Hackers Forum"
+
+#ROUTE  "Memory Alpha"          "C' Hackers Forum"
+
+ ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+ บ  The default route is where your system will send messages for boards  บ
+ บ that you are not connected with directly, and don't have a route for.  บ
+ บ  #DEFAULT_ROUTE  via_system                                            บ
+ ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+#DEFAULT_ROUTE  "Fred's Toy"
+

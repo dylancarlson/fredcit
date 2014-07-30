@@ -1,0 +1,104 @@
+
+      NODES.CIT
+
+  This file contains information needed by other your system to
+  network. Examples are provided.
+ --------------------------------------------------------------------
+  #NODE           name        region
+      Name of the BBS you network with, must be the same as its
+      nodename and as it is in your userlog.
+
+  #PHONE          phone
+      The phone number to dial for that system. It will be appended
+      to the #DIAL_PREF (in config.cit) to make a dial string.
+
+  #BAUD           baud
+      Baud to call other system at (300, 1200, 2400, 4800, 9600)
+
+  #DIAL_TIMEOUT   timeout
+      Time to wait during dial of other system.
+
+  #REDIAL         unused
+      Unused at this time...
+
+  #LOGIN          special
+      This is a string of commands. The valid commands are:
+      W " "       wait for whatever is in the quotes
+                  upper/lower case idependent, uses #WAIT_TIMEOUT
+      S " "       Send whatever is in the quotes
+      ! " "       Shell out and run whatever is in the quotes
+      P #         pause x seconds
+      For example: W " " S "S" W "als:" S "initials;password\r"
+      Would Wait for a space, send an 'S', wait for "als:", send
+          "initials;password\r"
+
+  #WAIT_TIMEOUT   timeout
+      The time to wait for a string in #login
+
+  #PROTOCOL       protocol
+      Name of the external protocol you wish to use for networking
+      (MUST BE BATCH)
+
+  #MAIL_TMP       mailfile
+      Name of the mail file for this system
+      (must be different for each system)
+
+  #EXPIRE         days
+      Number of days until a message expires coming over the net
+      for this system
+
+  #GROUP          here        there
+      Names of shared groups on your system (here) and the name for
+      in on the other system (there).  For use in .EG or .EL messages.
+      You can use this to translate net messages from one group to another.
+      (MAY BE MORE THAN ONE OF THESE)
+
+  #ROOM           here        there
+      Names of shared rooms on your system (here) and the name for
+      in on the other system (there).
+      You can use this to rename rooms as they net.
+      (MAY BE MORE THAN ONE OF THESE)
+
+ **********************************************************************
+
+                Node Name           Node Region
+#NODE           "Fantasia UnLtd."   "Seattle"
+                Node Phone Number
+#PHONE          "1(206)367-1856"
+                Node Baud Rate
+#BAUD           2400
+                Delay before hanging up
+#DIAL_TIMEOUT   40
+                Number of times to retry
+#REDIAL         3
+                Script to log into node
+#LOGIN          W " " S "S" W "als:" S "initials;password\r"
+                Delay (min) before calling again
+#WAIT_TIMEOUT   30
+                Network file transfer protocol
+#PROTOCOL       "Zmodem"
+                mail file to use for this node (in #HOMEPATH)
+#MAIL_TMP       "fantasia.mai"
+                Age of oldest acceptable message
+#EXPIRE         30
+
+                Local group             Remote Group
+#GROUP          "Seattle"               "Seattle"
+#GROUP          "Fredware"              "Fredware"
+
+                Local Room              Remote Room
+#ROOM           "FredCit"               "FredCit"
+#ROOM           "Fredware"              "Fredware"
+#ROOM           "Network Admin"         "Networking"
+#ROOM           "Sysop Forum"           "Sysop Forum"
+#ROOM           "WAN Administration"    "WAN Admin"
+
+#ROOM           "Other Boards"          "Other Dimensions"
+#ROOM           "General"               "Topic Drift"
+
+#ROOM           "BBS Development"       "BBS Development"
+#ROOM           "Source Code"           "Source Code"
+#ROOM           "C Forum"               "C Forum"
+#ROOM           "Programming"           "Code Writing"
+#ROOM           "MS/DOS Forum"          "MS/Dos"
+

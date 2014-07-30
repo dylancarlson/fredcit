@@ -1,0 +1,121 @@
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+
+  Citadel cron file
+
+  Any character before the # in each line of an entry in this file will
+cause it to be ignored.
+
+  A cron entry will be executed when the BBS has the time. You can
+define when is a valid time to do it.
+
+  #DO SHELL_1 "program"
+
+   Executes the program in the quotes.
+
+    Allowed prefixes in the program name are:
+
+ 	@ Don't save & clear screen
+ 	$ Use DOS COMMAND.COM to run command (allows path, batch files)
+ 	! Use supershell (all but about 2.5k free!)
+ 	? Don't write dorinfo?.def, userdato.apl
+
+   DOS error levels returned by the program are ignored.
+
+  #DO NETWORK
+
+   This will cause the bbs to try to call out to another node.
+
+  #DO EXIT code
+
+   This causes the BBS to exit to DOS with the error code value.  The error
+code value must be a positive whole number.
+
+  #DAYS
+
+   This defines the days the event can happen on.  Valid days are
+Mon,Tue,Wed,Thu,Fri,Sat,Sun, or Any.  You can have more then one day on a
+single #DAY line.
+
+  #HOURS
+
+   This defines the hours during which the event can happen.  Valid hours
+are 0-23, or Any.  You can have more then one hour on a single #HOUR line.
+
+  #REDO_TIME
+
+  This is the minimum number of minutes the BBS will wait before it will
+attempt the event again after successfully completing it.
+
+  #RETRY_TIME
+
+  This is the minimum number of minutes the BBS will wait before attempting
+a network event again after it fails.
+
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+
+        NB: The events in this file have been disabled by placing a space
+        in front of the # character.
+
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ /* run the program 'test' from the aplic dir sometime between 12 - 3 monday */
+ /* Dont do it again for at least 8 hours */
+ #DO             SHELL_1        "test"
+ #HOURS          0 1 2 3
+ #DAYS           mon
+ #REDO_TIME      480
+ #RETRY_TIME     0
+
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+  network with a node in your userlog called Fantasia Unltd. any time,
+ any day Dont do it again for at least 480 minutes (8 hours).
+
+ #DO             NETWORK         "Fantasia Unltd."
+ #HOURS          ANY
+ #DAYS           ANY
+ #REDO_TIME      480
+ #RETRY_TIME     0
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ /* run the batch file "backup" from the aplic dir */
+ /* Dont do it again for at least 12 hours */
+ #DO             SHELL_1        "$!backup"
+ #HOURS          ANY
+ #DAYS           ANY
+ #REDO_TIME      720
+ #RETRY_TIME     0
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ /* run the batch file "today" from the aplic dir at around midnight */
+ /* Dont do it again for at least 3 hours */
+ #DO             SHELL_1        "$!today"
+ #HOURS          0 1 2 3 4 5 6
+ #DAYS           ANY
+ #REDO_TIME      720
+ #RETRY_TIME     3
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ #DO             SHELL_1        "$!week"
+ #HOURS          0 1 2 3 4 5 6
+ #DAYS           MON
+ #REDO_TIME      180
+ #RETRY_TIME     3
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ #DO             SHELL_1        "$!tw1main"
+ #HOURS          1 2 3 4 5 6 7
+ #DAYS           ANY
+ #REDO_TIME      720
+ #RETRY_TIME     3
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ #DO             SHELL_1        "$!fog"
+ #HOURS          ANY
+ #DAYS           Wed Thu
+ #REDO_TIME      960
+ #RETRY_TIME     0
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ #DO             SHELL_1        "$!citstat"
+ #HOURS          ANY
+ #DAYS           ANY
+ #REDO_TIME      240
+ #RETRY_TIME     0
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+

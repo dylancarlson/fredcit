@@ -1,0 +1,298 @@
+Please check with me (Fred) before attempting to program using this doc,
+there may be changes!
+
+        This file contains the structures used in the citadel data files.
+Notice the changes from 3.10.xx versions. We now use turbo C and the
+structures are ALL byte aligned.
+        The structures presented here are directly drawn from the source,
+and the comments you get are all there are.
+
+        All files are fixed-length. Basically arrays of these structures.
+(MSG.DAT is not, and that file is not covered by this document)
+
+        This file is mostly provided for application designers.
+
+        The data types citadel uses:
+
+#define ulong   unsigned long   /* Makes it easier to format            */
+#define ushort  unsigned short  /* Makes it easier to format            */
+#define uint    unsigned int    /* Makes it easier to format            */
+#define uchar   unsigned char   /* Makes it easier to format            */
+#define BOOL    unsigned char   /* Makes it easier to format            */
+
+#define NAMESIZE       20       /* length of room names                 */
+
+typedef char label[31];         /* This was changed! */
+
+        Other important defines:
+
+#define MAXROOMS       250      /* number of rooms allowed in system    */
+#define MAXHALLS       64       /* number of halls allowed in system    */
+#define MAXGROUPS      32       /* number of groups allowed in system   */
+#define MAXTEXT        8192     /* cheating  (message buffer size)      */
+
+ ______________________________________________________________________________
+
+ROOM.DAT:
+
+struct rflags                   /* Room flags                           */
+{
+    unsigned INUSE    : 1;      /* Room in use?                         */
+    unsigned PUBLIC   : 1;      /* Room public?                         */
+    unsigned MSDOSDIR : 1;      /* Room directory?                      */
+    unsigned PERMROOM : 1;      /* Room permanent?                      */
+    unsigned GROUPONLY: 1;      /* Room Owned by a group?               */
+    unsigned READONLY : 1;      /* Room Read only?                      */
+    unsigned DOWNONLY : 1;      /* Room download only?                  */
+    unsigned SHARED   : 1;      /* Room Shared?                         */
+    unsigned MODERATED: 1;      /* Room Moderated?                      */
+    unsigned APLIC    : 1;      /* Room have application?               */
+
+/*
+ * new as of v3.10.00 DragCit
+ */
+    unsigned BIO      : 1;      /* By invintation only..                */
+    unsigned UPONLY   : 1;      /* Upload only                          */
+    unsigned WINDOW   : 1;      /* Window into other nav system         */
+    unsigned UNUSED   : 3;      /* extra space */
+} ;
+
+struct rTable                   /* The summation of a room              */
+{
+    uchar         rtgen;        /* generation # of room                 */
+    uchar         grpno;        /* group # which owns it                */
+    uchar         grpgen;       /* generation # of group which owns it  */
+    struct rflags rtflags;      /* public/private flag etc              */
+    label         rtname;       /* name of room                         */
+} ;                             /* And see ROOMA.C for declaration      */
+
+struct aRoom                        /* The appearance of a room:            */
+{
+    uchar           rbgen;          /* generation # of room                 */
+    struct rflags   rbflags;        /* same bits as flags above             */
+    label           rbname;         /* name of room                         */
+    char            rbdirname[64];  /* user directory for this room's files */
+    char            rbroomtell[13]; /* filename for room description        */
+    char            rbaplic[13];    /* filename for room description        */
+    uchar           rbgrpgen;       /* group gen# for Limited Access rooms  */
+    uchar           rbgrpno;        /* group # which owns it                */
+
+    /*
+     * new as of v3.10.00 DragCit
+     */
+    int             rbmodhash;      /* moderator's hash                     */
+    uchar           rbdirs[MAXDIRS];/* for alternate navigation             */
+    char            descript[80];   /* for .kv[...]                         */
+
+    /*
+     * new as of v3.11.00 DragCit
+     */
+    char            netID[20];      /* Network ID for room                  */
+};
+ ______________________________________________________________________________
+
+GRP.DAT:
+
+struct groupBuffer
+{
+    struct group_buffer
+    {
+        label    groupname  ;      /* Name of the group                 */
+        uchar    groupgen   ;      /* Group generation #.               */
+        char     desc[80]   ;      /* Description of group              */
+        unsigned g_inuse : 1;      /* Is group inuse?                   */
+        unsigned lockout : 1;      /* Sysop access needed for changes   */
+        unsigned hidden  : 1;      /* hidden to all, unless specified
+                                      by name or in group               */
+        unsigned UNUSED  :13;
+    } group[MAXGROUPS];
+} ;
+ ______________________________________________________________________________
+
+HALL.DAT:
+
+struct hallBuffer
+{
+    struct hall_buffer
+    {
+        label    hallname;           /* Name of our hall                */
+        uchar    grpno;              /* owning group's #                */
+        unsigned h_inuse    : 1;     /* Is hall inuse?                  */
+        unsigned owned      : 1;     /* Is this hall owned?             */
+        unsigned described  : 1;     /* described?                      */
+        unsigned dmaint     : 1;     /* default mainenacne              */
+        unsigned UNUSED     :12;
+        struct
+        {
+            unsigned inhall : 1;     /* is room in this hall?           */
+            unsigned window : 1;     /* is room a window into hallway?  */
+            unsigned UNUSED :14;
+        } hroomflags[MAXROOMS];
+        uchar    mdefault;           /* hall default mainencance hall   */
+        char     htell[13];          /* Hall description                */
+    } hall[MAXHALLS];
+} ;
+
+ ______________________________________________________________________________
+
+LOG.DAT
+
+struct lflags                   /* Flags for person in log              */
+{
+    unsigned L_INUSE   : 1;     /* Is this slot in use?                 */
+    unsigned UCMASK    : 1;     /* Uppercase?                           */
+    unsigned LFMASK    : 1;     /* Linefeeds?                           */
+    unsigned EXPERT    : 1;     /* Expert?                              */
+    unsigned AIDE      : 1;     /* Aide?                                */
+    unsigned TABS      : 1;     /* Tabs?                                */
+    unsigned OLDTOO    : 1;     /* Print out last oldmessage on  N>ew?  */
+    unsigned PROBLEM   : 1;     /* Twit bit                             */
+    unsigned UNLISTED  : 1;     /* List in Userlog?                     */
+    unsigned PERMANENT : 1;     /* Permanent log entry?                 */
+    unsigned SYSOP     : 1;     /* Sysop special access.                */
+    unsigned NODE      : 1;     /* Are they a node?                     */
+    unsigned NETUSER   : 1;     /* Can they send network E-mail         */
+    unsigned NOACCOUNT : 1;     /* Accounting disabled for this person? */
+    unsigned NOMAIL    : 1;     /* Can user send exclusive mail?        */
+    unsigned ROOMTELL  : 1;     /* Room-descriptions?                   */
+} ;
+
+#define MAXVISIT       16       /* #visits we remember old newestLo for */
+
+struct lbroomdata
+{
+    uchar    lbgen;             /* which rooms are visible?             */
+    unsigned xclude : 1;        /* is room excluded?                    */
+    unsigned mail   : 1;        /* private mail in this room?           */
+    unsigned lvisit : 5;        /* lastvisit pointer 1 - 16             */
+    unsigned UNUSED : 8;
+};
+
+struct logBuffer                /* The appearance of a user:            */
+{
+    label         lbname;       /* caller's name                        */
+    label         lbin;         /* caller's initials                    */
+    label         lbpw;         /* caller's password                    */
+    label         forward;      /* forwarding address                   */
+    label         title;        /* users title                          */
+    label         surname;      /* users surname                        */
+    int           hallhash;     /* default hallway hash                 */
+    uchar         lbnulls;      /* #Nulls, lCase, lFeeds                */
+    uchar         lbwidth;      /* terminal width                       */
+    long          calltime;     /* Time/date stamp of last call         */
+    ulong         callno;       /* Which caller # they were             */
+    float         credits;      /* Credits for accounting               */
+    uchar     groups[MAXGROUPS+32];/* Group generation # 16 of them        */
+    struct lbroomdata lbroom[MAXROOMS]; /* Data for each room in LogBuf */
+    ulong     lbvisit[MAXVISIT];/* newestLo for this and 15 prev.visits */
+
+/*
+ * new as of v3.10.00 DragCit
+ */
+    uchar    lastRoom;          /* room they were in last call          */
+    uchar    lastHall;          /* hall they were in last call          */
+
+    uchar    linesScreen;       /* the number of lines a caller has per */
+                                /* screen */
+    char          tty[10];      /* type of TTY                          */
+
+    struct lflags lbflags;      /* UCMASK, LFMASK, EXPERT, AIDE, INUSE  */
+    unsigned DUNGEONED : 1;     /* dungeoned user?                      */
+    unsigned MSGAIDE   : 1;     /* message only aide?                   */
+    unsigned FORtOnODE : 1;     /* forward to node?                     */
+    unsigned NEXTHALL  : 1;     /* Auto Next Hallway?                   */
+    unsigned OTHERNAV  : 2;     /* other nav type                       */
+    unsigned VERIFIED  : 1;     /* has the user been verified?          */
+    unsigned SURNAMLOK : 1;     /* surname locked?                      */
+    unsigned UNUSED    : 16;
+    unsigned UNUSED2   : 8;
+};
+
+struct lTable                   /* Summation of a person:               */
+{
+    int   ltpwhash;             /* hash of password                     */
+    int   ltinhash;             /* hash of initials                     */
+    int   ltnmhash;             /* hash of name                         */
+    int   ltlogSlot;            /* location in userlog.buf              */
+    ulong ltcallno;             /* Which caller # they were             */
+    char  permanent;            /* permanent log entry.                 */
+};
+ ______________________________________________________________________________
+
+APPLIC.H (included in full)
+
+/*
+ *  Citadel Application Header file
+ *  for use with the Citadel BBS system
+ *  version 3.03.9d and up.
+ *
+ *  writen by Peter Torkelson  6/2/88, for the public domain
+ *
+ *  This does not use bit feilds in the hopes that applications
+ *  can be writen with other compilers, or even basic if it comes
+ *  to that. (have fun reading this into basic however)
+ */
+
+/*
+ *  This structure is writen to a file 'userdato.apl' when cit calls an
+ *  application, and if there is a file 'userdati.apl' apon return it is
+ *  read in.
+ *
+ *  Things taged with a '@' can be changed, the rest are ignored apon
+ *  return to the BBS. Sorry, no sysop back doors in the applications! :-)
+ */
+
+struct apldata {
+  char  apl_name[20];              /*   User's name */
+  char  apl_surname[20];           /* @ Surname */
+  char  apl_node[20];              /*   Systems node name */
+  char  apl_room[20];              /*   Room they are in */
+
+  char  apl_tempPath[64];          /*   A good place to dump temp files */
+  char  apl_applPath[64];          /*   Where the system will look for the
+                                        Return files */
+
+  float apl_credits;               /* @ How many credits do they have? */
+
+  char  apl_reserved_2;            /* @ Are they in group reserved_2? */
+  char  apl_sysop;                 /*   Are they a sysop */
+  char  apl_aide;                  /*   Are they a aide */
+  char  apl_twit;                  /* @ Are they a twit? */
+  char  apl_expert;                /* @ Are they an expert user? */
+  char  apl_col;                   /*   What is their colum width */
+  char  apl_nulls;                 /*   How many nulls do they want? */
+  char  apl_termLF;                /*   Do they need LFs? */
+  char  apl_noChat;                /* @ Ring sysop on chat request? */
+  char  apl_noBells;               /* @ Can local hear bells? */
+  char  apl_attr;                  /*   Default screen attribute */
+  char  apl_wattr;                 /*   Attribute used by window at bottom of
+                                        screen */
+  char  apl_cattr;                 /*   Attribute used as the local console in
+                                        chat mode */
+
+  char  apl_com;                   /*   Where are they? */
+# define A_LOCAL  0
+# define A_COM1   1
+# define A_COM2   2
+  int   apl_baud;                  /*   Baud rate */
+# define A_300    0
+# define A_1200   1
+# define A_2400   2
+
+  /*
+   *    New as of 3.10.04
+   */
+
+  char  apl_accounting;            /*   Accounting on for system or user */
+  char  apl_ansion;                /* @ Ansi on flag */
+
+  char  apl_res1[48];              /*   Reserved for expansion */
+};
+
+
+struct msginfo {
+  label  roomName;                 /*   Where do we put the msg */
+  label  author;                   /*   Who wrote the dang thing?       */
+  char mi_res1[10];                /*   Reserved...             */
+};
+

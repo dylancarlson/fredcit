@@ -1,0 +1,189 @@
+
+
+
+
+
+
+
+
+
+
+
+
+                              FredCit message structure
+
+
+          This is a synopsis of FredCit networked messages, and to attempt
+          to explain FredCit networked message structure.  It's my hope
+          that this document will aide others in creating network gateways.
+
+                    Enjoy!
+
+                         Fred
+                         (-:{
+
+
+          Revisions
+
+
+          REV  Date           By                            Purpose
+          ==== ============== ============================= ====================
+          1    6 June, 1990   Fred McLain                   Original
+          2    16 June, 1990  Fred McLain                   First Update
+
+
+          Network Transactions
+
+
+          Network transaction diagram:
+
+          ***************************************************************
+          * Originator                                      Receiver    *
+          ***************************************************************
+          *                         Connected.                          *
+          *                         link established                    *
+          *                                                             *
+          *                                                             *
+          * Ctrl-N (manual netting) -------->                           *
+          *                                                             *
+          *                         session established                 *
+          *                         file transfers commence             *
+          *                                                             *
+          *                         <--------       mail file MESG.TMP  *
+          *                                                             *
+          * room list file                                              *
+          * ROOMREQ.TMP             -------->                           *
+          *                                                             *
+          *                         <--------       room files ROOM.nnn *
+          *                                                             *
+          * mail file MESG.TMP      -------->                           *
+          *                                                             *
+
+
+
+
+
+
+          *                         <--------       room list file      *
+          *                                         ROOMREQ.TMP         *
+          * room files ROOM.nnn     -------->                           *
+          *                                                             *
+          ***************************************************************
+
+           Transport layer is normally DSZ batch protocol.
+
+           Rooms are renamed to ROOMIN.nnn by destination.
+
+
+          Message Records
+
+
+          Messages are transmitted as a series of files.  The files contain
+          message records, with no header or terminating part to the
+          message file.  The hex value FF is used to mark the beginning of
+          each of these records.
+
+          Message record structure:
+
+
+               <0xff><mbattr><mbId><section ...><'M'><message text><0>
+
+
+          Message Attributes
+
+
+          mbAttr is an 16 bit binary number defining the message
+          attributes.  It's format is:
+
+          Bit       Token     Purpose
+
+          0         MAIL      Private message.
+          1         RECEIVED  Received mail.
+          2         REPLY     Reply was sent.
+          3         PROBLEM   Problem User author.
+          4         MADEVIS   Made Visible.
+          5         LIMITED   Limited-access message.
+          6         MODERATED Moderated message.
+          7         RELEASED  Released by moderator.
+          8         COPY      Message a copy.
+          9         NET       Networked mail en-route.
+          10-15     Unused    Future expansion.
+
+          Bits 10-16 are undefined, and may assume any value.  Some of
+          these values may not be used in netting.
+
+
+          Message sections
+
+
+          Message sections start with an ASCII letter, and are terminated
+          by a null.  No binary values are used.
+
+
+
+                                        - 2 -
+
+
+
+
+
+
+          Flag Token     Length    Format    Purpose
+                                 1       2
+          A    mbauth    NAMESIZE  ASCIIZ    Author's Name.
+          N    mbtitle   NAMESIZE  ASCIIZ    Author's title (before name)
+          n    mbsur     NAMESIZE  ASCIIZ    Author's surname (after name)
+                                                              3
+          C    mbcopy    NAMESIZE  ASCIIZ    Source message ID .
+          D    mbtime    NAMESIZE  Time      Message post time.
+          F    mbfwd     NAMESIZE  ASCIIZ    Forwarding address.
+                                                       4
+          G    mbgroup   NAMESIZE  ASCIIZ    Group name .
+          I    mbreply   NAMESIZE  ASCIIZ    ID of message replied to.
+                                                      5
+          L    mblink    64        ASCIIZ    File name .
+          M    message   (norm 8k) ASCIIZ    Message text.
+          O    mboname   NAMESIZE  ASCIIZ    Name of origin system.
+          o    mboreg    NAMESIZE  ASCIIZ    Origin system's region.
+          Q    mbocont   NAMESIZE  ASCIIZ    Origin system's country.
+          P    mbfpath   128       ASCIIZ    Path message came from.
+          p    mbtpath   128       ASCIIZ    Forced routing path.
+          R    mbroom    NAMESIZE  ASCIIZ    Room created in.
+          S    mbsrcId   NAMESIZE  ASCIIZ    Message ID on source system.
+                                                             6
+          T    mbto      NAMESIZE  ASCIIZ    Recipient's name .
+          X    mbx       NAMESIZE  ASCIIZ    Twitted/moderated message.
+          Z    mbzip     NAMESIZE  ASCIIZ    Name of destination system.
+          z    mbrzip    NAMESIZE  ASCIIZ    Destination system's region.
+          q    mbczip    NAMESIZE  ASCIIZ    Destination system's country.
+
+          C, F, and L type records do not net out.
+
+
+          Message text
+
+
+          Message text may be of any length, but on networked systems is
+          normally 8k.  Messages longer then this will be truncated.
+
+
+
+
+          _________________________________________________________________
+
+          1. NAMESIZE is 30 characters.
+
+          2. ASCIIZ is ASCII with a terminating null character.
+
+          3. For copies.
+
+          4. For group only messages.
+
+          5. For file linked messages.
+
+          6. For private mail.
+
+
+
+                                        - 3 -
+

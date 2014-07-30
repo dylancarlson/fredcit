@@ -1,0 +1,708 @@
+ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ CONFIG.CIT                                                           บ
+บ                                                                      บ
+บ      This is NOT a C program.  This is an installation file for      บ
+บ      Citadel that determines system parameters.  This file is read   บ
+บ      automatically when needed by fcit.exe.  Deleting etc.dat        บ
+บ      before running Citadel will force Citadel to reconfigure.       บ
+บ                                                                      บ
+ฬออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออน
+บ                                                                      บ
+บ      To install Citadel, please walk through and follow the          บ
+บ      instructions before each directive.                             บ
+บ                                                                      บ
+ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                      บ
+บ  Conventions:                                                        บ
+บ                                                                      บ
+บ      Numeric parameters, except for the display attributes are in    บ
+บ  decimal format.  Display attributes are hexadecimal, but hey, we do บ
+บ  give you a program to help figure that out.                         บ
+บ                                                                      บ
+บ      String parameters can be up to 32 characters in length, and may บ
+บ  contain spaces if they are quoted in double (") quotes.             บ
+บ                                                                      บ
+บ      Any String in double quotes should substitute / or \\ for  \    บ
+บ  this is very important as a single \ indicates an escape code.      บ
+บ                                                                      บ
+บ    All .CIT file parameters start with a '#' character as the        บ
+บ  very first character on the line.  Anything else will disable       บ
+บ  the parameter.  Parameters consisting of more then one word         บ
+บ  should be quoted, and more then one value may be specified on       บ
+บ  a single line where noted.  C language style escape characters      บ
+บ  in quoted strings are supported.  Be careful with this, to          บ
+บ  specify a path in a quoted string, you will need to double up       บ
+บ  the '\' characters.  Thus, C:\FCIT\APLIC becomes                    บ
+บ  "C:\\FCIT\\APLIC" when quoted.  Some control characters can be      บ
+บ  inserted in parameters by using '^' as a prefix.  Control-G         บ
+บ  would become ^G in a quoted string.                                 บ
+บ                                                                      บ
+บ    You will eventually need to edit all of the .CIT files            บ
+บ  except the FILEINFO.CIT files.  These files all contain             บ
+บ  comments describing the parameters in them.  Start out with         บ
+บ  CONFIG.CIT.  Most of the defaults for these parameters should       บ
+บ  be usable.  Pay careful attention to the path parameters, as        บ
+บ  no special error checking is done on these.  The paths must         บ
+บ  exist!  I recommend you use a drive letter when specifying any      บ
+บ  path.  If you do not intend to network your board, you can          บ
+บ  ignore ROUTE.CIT and NODES.CIT.                                     บ
+บ                                                                      บ
+ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### SYSOP                                                          ณ
+ณ The log in name of the sysop                                         ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#SYSOP "Your Login Name"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### nodename                                                       ณ
+ณ nodename is the name of the system.  It is printed when someone callsณ
+ณ up and when the Read Status command is used.  In the future,         ณ
+ณ networked messages will have the nodename in the header.             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NODENAME       "Your BBS Name"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### noderegion                                                     ณ
+ณ this is the region your board is in, used for networking             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NODEREGION     "Seattle"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### CREDIT_NAME                                                    ณ
+ณ What minutes are called on this BBS                                  ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#CREDIT_NAME "minute"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### kill                                                           ณ
+ณ if kill is 1, users can kill their own messages. And only their own. ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#KILL 1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### subhubs                                                        ณ
+ณ if subhubs is 0, window rooms are treated the same as on Stonehenge  ณ
+ณ if subhubs is 1, the following changes happen.                       ณ
+ณ   1) if Lobby> is not in a hall, it does not enter G)oto loop.       ณ
+ณ       if there are no Newrooms and no Windows, system defaults to    ณ
+ณ       first window in hallway.                                       ณ
+ณ   2) if there are no newrooms, hitting 'G' will take user to first   ณ
+ณ       window in hall, hitting 'G' again will take you to the second  ณ
+ณ       window. Citadel will cycle back to the first window again.     ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#SUBHUBS 1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### loginstats                                                     ณ
+ณ if loginstats is 1, the following statistics are displayed at login. ณ
+ณ  a) login name                   b) userlog position                 ณ
+ณ  c) caller #                     d) #people on since last call       ณ
+ณ  e) #calls since last call       f) #new messages                    ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#LOGINSTATS 1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### roomtell                                                       ณ
+ณ roomtell activates room descriptions. the descriptions are found     ณ
+ณ in #roompath.                                                        ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ROOMTELL 1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ The following parameters determine the size of your system           ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### messagek                                                       ณ
+ณ messagek defines (in "K") how many kilobytes of message space        ณ
+ณ you wish to use, typically, 150 works well on floppy machines, 512   ณ
+ณ works well for hard disk systems.  minimum of 1 and a maximum of 1512ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MESSAGEK       512
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### NMESSAGES                                                      ณ
+ณ sets up the maximum number of messages that the system will be       ณ
+ณ expected to contain at any one time.  5 x messagek is a good guess.  ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NMESSAGES      2200
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### MAXTEXT                                                        ณ
+ณ MAXTEXT defines the maximum size of a single message.  Values betweenณ
+ณ 2048 and 8192 are reasonable and work well.  Typically, this is aboutณ
+ณ 8192.      minimum 128       maximum 16384                           ณ
+ณ If you intend to ever network your BBS, use 8192.                    ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MAXTEXT        8192
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### MAXLOGTAB                                                      ณ
+ณ MAXLOGTAB defines (in decimal) how many users can be stored in the   ณ
+ณ userlog at one time.  Each userlog entry takes up about 500 bytes    ณ
+ณ on disk and 10 bytes in RAM.  Values between 64 and 256 work well    ณ
+ณ in most cases.                                                       ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MAXLOGTAB     128
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ The following  parameters define which drive and path various files  ณ
+ณ live in.                                                             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### homepath                                                       ณ
+ณ homepath decides which drive and subdirectory system files will      ณ
+ณ be found in.     defaults  --   Floppy = B:\   Hard disk = C:\fcit   ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#HOMEPATH       C:\fcit
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### swapfile                                                       ณ
+ณ The full path to the swap file.  The swap file is used to store FCit ณ
+ณ and all of it's tables when running an application.  If there is     ณ
+ณ enough EMS 4.0 or XMS memory, the swap file will not be created, and ณ
+ณ memory will be used instead. This file tends to be very large (about ณ
+ณ 400k on a system with a 512k message base).                          ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#SWAPFILE       C:\FCIT\FCIT.SWP
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### msgpath                                                        ณ
+ณ msgpath defines which drive and subdirectory the message file will   ณ
+ณ be found in    defaults  --   Floppy = B:\   Hard disk = C:\fcit     ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MSGPATH        C:\fcit
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### helppath                                                       ณ
+ณ helppath defines which drive and subdirectory the help files live in.ณ
+ณ     Defaults  --   Floppy = A:\HELP   Hard disk = C:\fcit\HELP       ณ/
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#HELPPATH       C:\fcit\HELP
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### application                                                    ณ
+ณaplication defines which drive and subdirectory the applications      ณ
+ณ files live in.                                                       ณ
+ณ     Defaults  --   Floppy = A:\HELP   Hard disk = C:\fcit\APPLIC     ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#APPLICATION    C:\fcit\APLIC
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### temppath                                                       ณ
+ณ sets the disk and subdirectory to use for temporary networking files ณ
+ณ defaults -- Floppy = A:\TEMP(or ramdisk if used) Hard disk = C:\TEMP ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#TEMPPATH      C:\fcit\TEMP
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### roompath                                                       ณ
+ณ roompath defines which drive and subdirectory the room descriptions  ณ
+ณ are to be found.                                                     ณ
+ณ     Defaults  --   Floppy = A:\ROOMS  Hard disk = C:\fcit\ROOMS      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ROOMPATH      C:\fcit\ROOMS
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ The next six parameters do hardware-level things.                    ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### attr        IN HEX!                                            ณ
+ณ attr is the video-display color to use, bottom line is inverse       ณ
+ณ wattr is the video-display color for the window                      ณ
+ณ cattr is the color of what console types in chat                     ณ
+ณ uttr  is the color of underlined text                                ณ
+ณ battr is the boarder attribute (Color systems only)                  ณ
+ณ (NOTE: the color.exe program can be used to help you find colors you ณ
+ณ        like)                                                         ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ATTR            10
+#WATTR           70
+#CATTR           0A
+#UTTR            01
+#BATTR           0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### bios                                                           ณ
+ณ If your system experiences 'snow' with some programs you will want toณ
+ณ set this to 1. (It tells Citadel to use the BIOS for screen writes orณ
+ณ to write directly to video ram)                                      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#BIOS            0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### mdata                                                          ณ
+ณ mdata defines the modem data port.                                   ณ
+ณ      1       for  port 1 (COM1)                                      ณ
+ณ      2       for  port 2 (COM2)                                      ณ
+ณ      3       for  port 3 (COM3)                                      ณ
+ณ      4       for  port 4 (COM4)                                      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MDATA          1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### dumb_modem                                                     ณ
+ณ dumb_modem gives alternate baud rate detection methods.              ณ
+ณ 0 the Citadel looks for Numeric response codes from a Hayes          ณ
+ณ   Compatible modem. (normal)                                         ณ
+ณ 1 users must type a plurality of carriage returns to determine what  ณ
+ณ   the baud rate is.                                                  ณ
+ณ 2 looks for the HS line on the RI line, you need a special           ณ
+ณ   cable for this trick. It is accurate however.                      ณ
+ณ 3 is for verbose response set.                                       ณ
+ณ 4 fixes the system at the INIT_BAUD                                  ณ
+ณ                                                                      ณ
+ณ 0 and 3 handle 9600, 1 handles 2400.                                 ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#DUMB_MODEM     0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ INIT_BAUD tells Citadel what baud rate to start the modem at.        ณ
+ณ Use the maximum baud rate of your modem here.                        ณ
+ณ                                                                      ณ
+ณ 0 = 300, 1 = 1200, 2 = 2400, 3 = 4800, 4 = 9600                      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#INIT_BAUD      2
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### modsetup                                                       ณ
+ณ sets the modem initialization string.  for Hayes 300/1200 modems, theณ
+ณ string 'X1' should be added after the AT command.                    ณ
+ณ Use X2 for Hayes compatable 2400 baud modems.                        ณ
+ณ For smart modems, use X4 for the full verbose response codes.        ณ
+ณ Make sure that your modem uses numeric responses if DUMB_MODEM is setณ
+ณ to 0 (Hayes V0 command).                                             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MODSETUP       "AT X2 H0 V0 M1 S0=1"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ Dial out init string                                                 ณ
+ณ Normally you will use V1 here (Hayes).  Be sure that the Xn command  ณ
+ณ is correct for you modem (see MODSETUP).                             ณ
+ณ This is used when the BBS dials another board for networking.        ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#DIAL_INIT         "AT X2 H0 M0 V1 S0=0"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ Dial prefix                                                          ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#DIAL_PREF         "ATDT"
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### offhook                                                        ณ
+ณ Hayes command set compatable modems only.                            ณ
+ณ if offhook is 1, modem goes off-hook at console login (AT M0 H1)     ณ
+ณ This won't work right if you don't have an H1 command in MODSETUP.   ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#OFFHOOK           0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### printer                                                        ณ
+ณ printer defines the file output is copied to when you press the      ณ
+ณ alt-p key.  This can be any valid dos file or device name            ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#PRINTER        C:\fcit\PRINTER.OUT
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ the following refer to default configuration information             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### width                                                          ณ
+ณ default screen width for users who are not logged in.                ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#WIDTH          79
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### nulls                                                          ณ
+ณ default number of nulls for users who are not logged in.             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NULLS          0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### uppercase                                                      ณ
+ณ default uppercase-only flag for users who are not logged in.         ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#UPPERCASE      0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### linefeeds                                                      ณ
+ณ default linefeeds flag for users who are not logged in.              ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#LINEFEEDS      1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### tabs                                                           ณ
+ณ default tabs flag for users who are not logged in.                   ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#TABS           0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### oldcount     (NOT IN USE)                                      ณ
+ณ oldcount determines how many messages are new to first-time callers. ณ
+ณ a value of zero makes all messages new to first-time callers.        ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#OLDCOUNT       1000
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ The following nine parameters determine security features of your    ณ
+ณ installation.                                                        ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### f6password                                                     ณ
+ณ a password to lock the console, leave blank if you want none.        ณ
+ณ a password of disabled will lock them w/o giving access              ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#F6PASSWORD     ""
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### enterok                                                        ณ
+ณ enterok is 1 if un-logged users may use any enter commands           ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ENTEROK        0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### readok                                                         ณ
+ณ readok is 1 if un-logged users may use any read commands.            ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#READOK         1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### roomok                                                         ณ
+ณ roomok is 1 if non-aide users may create rooms                       ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ROOMOK         1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### forcelogin                                                     ณ
+ณ forcelogin is 1 if you want to automatically ask for initials and    ณ
+ณ password when someone calls up.                                      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#FORCELOGIN     1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### nopwecho                                                       ณ
+ณ nopwecho will disable the echo of passwords to the USER (the sysop   ณ
+ณ never sees passwords regardless) if it is non-zero.  Passwords and   ณ
+ณ initials must then be changed and (initially) set up using a double  ณ
+ณ entry confirmation scheme.                                           ณ
+ณ                                                                      ณ
+ณ If NOPWECHO is 1, Cit will display digits for the password & inits.  ณ
+ณ If NOPWECHO is 0, Cit will display characters as they are typed in.  ณ
+ณ If NOPWECHO is the ASCII code for a number (48-57) numbers will be   ณ
+ณ used.  This is spiffy, the numbers count the password characters.    ณ
+ณ Use 48 if you want to try this.                                      ณ
+ณ If NOPWECHO is anything else, Cit will use that as the echo characterณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NOPWECHO      48
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### user                                                           ณ
+ณ You may optionally define default attributes for new users and users ณ
+ณ who are not logged in.  This is useful for verified systems and      ณ
+ณ strange accounting schemes. More then one of these attributes may    ณ
+ณ be placed on this line.  Just use a space between them               ณ
+ณ                                                                      ณ
+ณ  PROBLEM_USER    -- Problem user attribute is the default            ณ
+ณ  PERMANENT       -- Permanent log entry is the default               ณ
+ณ  NO_ACCOUNTING   -- Accounting is disabled by default                ณ
+ณ  NETWORK         -- Network privileged user by default               ณ
+ณ  NO_MAIL         -- Set all new users to not be able to enter mail   ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#USER   NETWORK
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### trap                                                           ณ
+ณ controls what events are trapped, the following are valid parameters,ณ
+ณ more than one may be specified:                                      ณ
+ณ                                                                      ณ
+ณ  ALL             -- All events are logged.                           ณ
+ณ  CARRIER         -- Carrier detect and carrier loss are logged.      ณ
+ณ  LOGIN           -- Logins, logouts, and new users are logged.       ณ
+ณ  NEWROOM         -- New room creations are logged.                   ณ
+ณ  PROBLEM_USER    -- Problem user messages are logged.                ณ
+ณ  CHAT            -- Chat requests are logged.                        ณ
+ณ  PASSWORD        -- Password changes are logged.                     ณ
+ณ  AIDE            -- Aide functions are logged.                       ณ
+ณ  SYSOP           -- Sysop functions are logged.                      ณ
+ณ  UPLOAD          -- All file uploads are logged.                     ณ
+ณ  DOWNLOAD        -- All file downloads are logged.                   ณ
+ณ  ERROR           -- Internal system errors are logged.               ณ
+ณ  NETWORK         -- Network events are logged.                       ณ
+ณ  ACCOUNT         -- Accounting information is logged.                ณ
+ณ  APPLIC          -- Applications executed are logged.                ณ
+ณ                                                                      ณ
+ณ  note: placing a ! before an item Disables that item.                ณ
+ณ  I.E.  ALL !CHAT    would trap all events except chat requests       ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#TRAP           ALL
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### trap_file                                                      ณ
+ณ the trap_file is where system auditing and important events are      ณ
+ณ logged.  this can be any valid DOS file or device name.  log info    ณ
+ณ will be appended to this file.                                       ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#TRAP_FILE      C:\fcit\trap.fbi
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ 1 lets users read the limited access userlog.                        ณ
+ณ 0 prevents users from reading the limitied access userlog.           ณ
+ณ                                                                      ณ
+ณ Note that this is in addition to controls over ANY userlog reads set ณ
+ณ in READLOG                                                           ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#READLLOG          1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ 1 lets users read the regular access userlog.                        ณ
+ณ 0 prevents users from reading the regular  access userlog.           ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#READLOG           1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ 1 lets aides read the regular access userlog.                        ณ
+ณ 0 prevents aides from reading the regular  access userlog.           ณ
+ณ                                                                      ณ
+ณ Note that this takes priority over READLOG                           ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#AIDEREADLOG       1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ lets users enter their own surname                                   ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ENTERSUR          1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### aidehall                                                        ณ
+ณ 0= only sysops can use .ah .aw (hall changing commands)              ณ
+ณ 1= aides to!                                                         ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#AIDEHALL          0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### moderate                                                        ณ
+ณ 0= only sysops can see moderated messages                            ณ
+ณ 1= aides to!                                                         ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MODERATE          0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### private                                                         ณ
+ณ 0 open                                                               ณ
+ณ 1 message to sysop                                                   ณ
+ณ 2 message to sysop drop carrier                                      ณ
+ณ 3 enter user non-verified and ask name number surname(if configured) ณ
+ณ 4 same as 3 with drop carrier                                        ณ
+ณ 5 newuserapp                                                         ณ
+ณ 6 newuserapp drop carrier                                            ณ
+ณ 7 enter user non-verified and newuserapp                             ณ
+ณ 8 same as 7 with drop carrier                                        ณ
+ณ 9 closed, tells them so in a blurb "closesys.blb"                    ณ
+ณ 10 same as 9 with drop carrier.                                      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#PRIVATE           0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### messageroom                                                     ณ
+ณ   Number of messages that can be entered in a room on one call.      ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MESSAGE_ROOM       5
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### newuserapp                                                      ณ
+ณ name off the application that will be run for new users (if set in   ณ
+ณ #private)                                                            ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NEWUSERAPP     "newuser"
+
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ  the following seven parameters set up accounting information        ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### unlogtimeout                                                   ณ
+ณ sets the amount of time (in minutes) an un-logged in user may be idleณ
+ณ before being logged out.                                             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#UNLOGTIMEOUT   1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### timeout                                                        ณ
+ณ sets the amount of time (in minutes) a logged in user may be idle    ณ
+ณ before being logged out.                                             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#TIMEOUT        6
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### accounting                                                     ณ
+ณ if non-zero, will enable accounting functions.  Otherwise, they are  ณ
+ณ disabled.                                                            ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ACCOUNTING     1
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### unloggedbalance                                                ณ
+ณ this variable will be the balance that users who are not logged in   ณ
+ณ or are new users will get.                                           ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#UNLOGGEDBALANCE    5.0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ ##### MAX_WARN                                                       ณ
+ณ MAX_WARN is the maximum number of warnings (related to excessive     ณ
+ณ resource usage) that a user may receive before being booted off.     ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MAX_WARN       4
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### cost1200  amount to multiply input and output costs by at 1200  ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#COST1200          1.0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### cost2400  amount to multiply input and output costs by at 2400  ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#COST2400          1.0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### maxbalance                                                      ณ
+ณ Maximum balance that users may accrue                                ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MAXBALANCE       1000000.0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### newbal                                                          ณ
+ณ Amount for new user                                                  ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#NEWBAL            60.0
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ  The next few items are odds and ends left over..                    ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### surnames                                                        ณ
+ณ Define whether you have surname or not                               ณ
+ณ Use 1 for surnames, 2 for titles and surnames.                       ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#SURNAMES           2
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### IDLE_WAIT                                                       ณ
+ณ  Time the system will wait before executing an event                 ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#IDLE_WAIT         3
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### MAXFILES                                                        ณ
+ณ The max number of files Citadel will see in a directory.             ณ
+ณ (NOTE: this is also the max number of rooms you can network!)        ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#MAXFILES        250
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### DATESTAMP                                                       ณ
+ณ #### VDATESTAMP                                                      ณ
+ณ These are the format the time/date will be displayed on your system  ณ
+ณ The DATESTAMP is used for messages, and the other is for reading     ณ
+ณ verbose and the read status, ext                                     ณ
+ณ (NOTE: See the STRFTIME.DOC for specifics on the format)             ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#DATESTAMP       "%A %D%b%y"
+#VDATESTAMP      "%A %D%b%y %I:%M %p (%Z)"
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #### SCREENSAVE                                                      ณ
+ณ The number of seconds before the screen blanks itself if the system  ณ
+ณ is idle.  Use 0 to disable the screen saver.                         ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#SCREENSAVE      90
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณ #alldone must appear at the end of the file                          ณ
+ณ                                                                      ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+#ALLDONE
+

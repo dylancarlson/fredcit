@@ -1,0 +1,5 @@
+
+if you are upgrading versions of cit from 52 or up
+you MUST convert your data files before running the
+new version.  See the docs in the gcit-cvt.zip!
+

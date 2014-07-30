@@ -1,0 +1,25 @@
+BULLETIN BLB    Displayed after the user logs in and before new message
+                in lobby.
+CHAT     BLB    Displayed when the sysop enters chat with the user.
+CLOSESYS BLB    Displayed to users requesting access to a closed system.
+ENTRY    BLB       " "    before they can enter a message in nonexpert mode.
+GOODBYE  BLB       " "    when the user runs out of time.
+HELLO___ BLB       " "    before the user loggs in. Cycles. 
+LOGOUT__ BLB       " "    after the user logges out. Cycles.
+NEWROOM  BLB       " "    before creating a new room in nonexpert mode.
+NOCHAT__ BLB       " "    to user requesting chat with chat turned off. 
+                          Cycles (cycle is reset at login.)
+NOLOGIN  BLB       " "    when a user is not able to login for accounting 
+                reasons.
+PASSWORD BLB    New users get this right before their name is requested.
+SYS      BLB
+TEXTUP   BLB    Output in non-xpert mode before a text upload.
+USERINFO BLB    New users get this first thing.
+VERIFIED BLB    Unverified users get this when they try to login.
+WARNING  BLB    This is output when you are over your timelimit.
+WCDOWN   BLB    This is output before any download in non-exptert mode.
+WCUP     BLB    This is output before any upload in non-exptert mode.
+NEWMSG   BLB    Shown to new users before they enter a message to sysop.
+NEWQUEST BLB    Shown to users before answering the questions.. 
+NEWROOM  BLB    Shown in nonexpert mode to users creating a room.
+
